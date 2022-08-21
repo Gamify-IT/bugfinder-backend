@@ -3,6 +3,7 @@ package de.unistuttgart.bugfinder.code;
 import de.unistuttgart.bugfinder.code.word.WordMapper;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
@@ -17,7 +18,7 @@ public class CodeMapper {
   private WordMapper wordMapper;
 
   public CodeDTO toDTO(final Code code) {
-    return new CodeDTO(code.getId(), wordMapper.toDTO(code.getWords()));
+    return new CodeDTO(code.getId().toString(), wordMapper.toDTO(code.getWords()));
   }
 
   public List<CodeDTO> toDTO(final List<Code> codes) {
@@ -29,7 +30,7 @@ public class CodeMapper {
   }
 
   public Code fromDTO(final CodeDTO codeDTO) {
-    return new Code(codeDTO.getId(), wordMapper.fromDTO(codeDTO.getWords()));
+    return new Code(UUID.fromString(codeDTO.getId()), wordMapper.fromDTO(codeDTO.getWords()));
   }
 
   public List<Code> fromDTO(final List<CodeDTO> codeDTOs) {

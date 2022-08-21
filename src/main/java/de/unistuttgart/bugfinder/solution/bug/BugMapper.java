@@ -3,6 +3,7 @@ package de.unistuttgart.bugfinder.solution.bug;
 import de.unistuttgart.bugfinder.code.word.WordMapper;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
@@ -17,7 +18,12 @@ public class BugMapper {
   private WordMapper wordMapper;
 
   public BugDTO toDTO(final Bug bug) {
-    return new BugDTO(bug.getId(), wordMapper.toDTO(bug.getWord()), bug.getErrorType(), bug.getCorrectValue());
+    return new BugDTO(
+      bug.getId().toString(),
+      wordMapper.toDTO(bug.getWord()),
+      bug.getErrorType(),
+      bug.getCorrectValue()
+    );
   }
 
   public List<BugDTO> toDTO(final List<Bug> bugs) {
@@ -30,7 +36,7 @@ public class BugMapper {
 
   public Bug fromDTO(final BugDTO bugDTO) {
     return new Bug(
-      bugDTO.getId(),
+      UUID.fromString(bugDTO.getId()),
       wordMapper.fromDTO(bugDTO.getWord()),
       bugDTO.getErrorType(),
       bugDTO.getCorrectValue()

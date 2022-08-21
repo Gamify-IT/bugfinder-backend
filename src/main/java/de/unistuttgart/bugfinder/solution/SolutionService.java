@@ -31,9 +31,9 @@ public class SolutionService {
     return solutionMapper.toDTO(solutionRepository.findAll());
   }
 
-  public Optional<SolutionDTO> find(final UUID id) {
+  public Optional<SolutionDTO> find(final String id) {
     log.info("get solution {}", id);
-    return solutionMapper.toDTO(solutionRepository.findById(id));
+    return solutionMapper.toDTO(solutionRepository.findById(UUID.fromString(id)));
   }
 
   public SolutionDTO save(final SolutionDTO solutionDTO) {
@@ -41,31 +41,31 @@ public class SolutionService {
     return solutionMapper.toDTO(solutionRepository.save(solutionMapper.fromDTO(solutionDTO)));
   }
 
-  public void delete(final UUID id) {
+  public void delete(final String id) {
     log.info("delete solution {}", id);
-    solutionRepository.deleteById(id);
+    solutionRepository.deleteById(UUID.fromString(id));
   }
 
-  public BugDTO addBug(final UUID id, final BugDTO bug) {
+  public BugDTO addBug(final String id, final BugDTO bug) {
     log.info("add bug {} to solution {}", bug, id);
-    final Solution solution = solutionRepository.findById(id).orElseThrow();
+    final Solution solution = solutionRepository.findById(UUID.fromString(id)).orElseThrow();
     solution.addBug(bugMapper.fromDTO(bug));
     solutionRepository.save(solution);
     return bug;
   }
 
-  public BugDTO removeBug(final UUID id, final UUID bugId) {
+  public BugDTO removeBug(final String id, final String bugId) {
     log.info("remove bug {} from solution {}", bugId, id);
-    final Solution solution = solutionRepository.findById(id).orElseThrow();
+    final Solution solution = solutionRepository.findById(UUID.fromString(id)).orElseThrow();
     final BugDTO bug = bugService.find(bugId).orElseThrow();
     solution.removeBug(bugMapper.fromDTO(bug));
     solutionRepository.save(solution);
     return bug;
   }
 
-  public List<BugDTO> getBugs(final UUID id) {
+  public List<BugDTO> getBugs(final String id) {
     log.info("get bugs from solution {}", id);
-    final Solution solution = solutionRepository.findById(id).orElseThrow();
+    final Solution solution = solutionRepository.findById(UUID.fromString(id)).orElseThrow();
     return bugMapper.toDTO(solution.getBugs());
   }
 }

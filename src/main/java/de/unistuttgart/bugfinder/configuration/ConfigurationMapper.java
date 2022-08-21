@@ -3,6 +3,7 @@ package de.unistuttgart.bugfinder.configuration;
 import de.unistuttgart.bugfinder.code.CodeMapper;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
@@ -17,7 +18,7 @@ public class ConfigurationMapper {
   private CodeMapper codeMapper;
 
   public ConfigurationDTO toDTO(final Configuration configuration) {
-    return new ConfigurationDTO(configuration.getId(), codeMapper.toDTO(configuration.getCodes()));
+    return new ConfigurationDTO(configuration.getId().toString(), codeMapper.toDTO(configuration.getCodes()));
   }
 
   public List<ConfigurationDTO> toDTO(final List<Configuration> codes) {
@@ -29,7 +30,10 @@ public class ConfigurationMapper {
   }
 
   public Configuration fromDTO(final ConfigurationDTO configurationDTO) {
-    return new Configuration(configurationDTO.getId(), codeMapper.fromDTO(configurationDTO.getCodes()));
+    return new Configuration(
+      UUID.fromString(configurationDTO.getId()),
+      codeMapper.fromDTO(configurationDTO.getCodes())
+    );
   }
 
   public List<Configuration> fromDTO(final List<ConfigurationDTO> codeDTOs) {

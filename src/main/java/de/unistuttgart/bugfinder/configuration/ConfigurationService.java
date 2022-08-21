@@ -31,9 +31,9 @@ public class ConfigurationService {
     return configurationMapper.toDTO(configurationRepository.findAll());
   }
 
-  public Optional<ConfigurationDTO> find(final UUID id) {
+  public Optional<ConfigurationDTO> find(final String id) {
     log.info("get configuration {}", id);
-    return configurationMapper.toDTO(configurationRepository.findById(id));
+    return configurationMapper.toDTO(configurationRepository.findById(UUID.fromString(id)));
   }
 
   public ConfigurationDTO save(final ConfigurationDTO configurationDTO) {
@@ -41,31 +41,31 @@ public class ConfigurationService {
     return configurationMapper.toDTO(configurationRepository.save(configurationMapper.fromDTO(configurationDTO)));
   }
 
-  public void delete(final UUID id) {
+  public void delete(final String id) {
     log.info("delete configuration {}", id);
-    configurationRepository.deleteById(id);
+    configurationRepository.deleteById(UUID.fromString(id));
   }
 
-  public CodeDTO addCode(final UUID id, final CodeDTO code) {
+  public CodeDTO addCode(final String id, final CodeDTO code) {
     log.info("add code {} to configuration {}", code, id);
-    final Configuration configuration = configurationRepository.findById(id).orElseThrow();
+    final Configuration configuration = configurationRepository.findById(UUID.fromString(id)).orElseThrow();
     configuration.addCode(codeMapper.fromDTO(code));
     configurationRepository.save(configuration);
     return code;
   }
 
-  public CodeDTO removeCode(final UUID id, final UUID codeId) {
+  public CodeDTO removeCode(final String id, final String codeId) {
     log.info("remove code {} from configuration {}", codeId, id);
-    final Configuration configuration = configurationRepository.findById(id).orElseThrow();
+    final Configuration configuration = configurationRepository.findById(UUID.fromString(id)).orElseThrow();
     final CodeDTO persistedCode = codeService.find(id).orElseThrow();
     configuration.removeCode(codeMapper.fromDTO(persistedCode));
     configurationRepository.save(configuration);
     return null;
   }
 
-  public List<CodeDTO> getCodes(final UUID id) {
+  public List<CodeDTO> getCodes(final String id) {
     log.info("get codes from configuration {}", id);
-    final Configuration configuration = configurationRepository.findById(id).orElseThrow();
+    final Configuration configuration = configurationRepository.findById(UUID.fromString(id)).orElseThrow();
     return codeMapper.toDTO(configuration.getCodes());
   }
 }

@@ -3,6 +3,7 @@ package de.unistuttgart.bugfinder.solution;
 import de.unistuttgart.bugfinder.solution.bug.BugMapper;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
@@ -17,7 +18,7 @@ public class SolutionMapper {
   private BugMapper bugMapper;
 
   public SolutionDTO toDTO(final Solution solution) {
-    return new SolutionDTO(solution.getId(), bugMapper.toDTO(solution.getBugs()));
+    return new SolutionDTO(solution.getId().toString(), bugMapper.toDTO(solution.getBugs()));
   }
 
   public List<SolutionDTO> toDTO(final List<Solution> solutions) {
@@ -29,7 +30,7 @@ public class SolutionMapper {
   }
 
   public Solution fromDTO(final SolutionDTO solutionDTO) {
-    return new Solution(solutionDTO.getId(), bugMapper.fromDTO(solutionDTO.getBugs()));
+    return new Solution(UUID.fromString(solutionDTO.getId()), bugMapper.fromDTO(solutionDTO.getBugs()));
   }
 
   public List<Solution> fromDTO(final List<SolutionDTO> solutionDTOs) {

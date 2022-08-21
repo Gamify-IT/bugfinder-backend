@@ -31,9 +31,9 @@ public class CodeService {
     return codeMapper.toDTO(codeRepository.findAll());
   }
 
-  public Optional<CodeDTO> find(final UUID id) {
+  public Optional<CodeDTO> find(final String id) {
     log.info("get code {}", id);
-    return codeMapper.toDTO(codeRepository.findById(id));
+    return codeMapper.toDTO(codeRepository.findById(UUID.fromString(id)));
   }
 
   public CodeDTO save(final CodeDTO codeDTO) {
@@ -41,31 +41,31 @@ public class CodeService {
     return codeMapper.toDTO(codeRepository.save(codeMapper.fromDTO(codeDTO)));
   }
 
-  public void delete(final UUID id) {
+  public void delete(final String id) {
     log.info("delete code {}", id);
-    codeRepository.deleteById(id);
+    codeRepository.deleteById(UUID.fromString(id));
   }
 
-  public WordDTO addWord(final UUID id, final WordDTO word) {
+  public WordDTO addWord(final String id, final WordDTO word) {
     log.info("add word {} to code {}", word, id);
-    final Code code = codeRepository.findById(id).orElseThrow();
+    final Code code = codeRepository.findById(UUID.fromString(id)).orElseThrow();
     code.addWord(wordMapper.fromDTO(word));
     codeRepository.save(code);
     return word;
   }
 
-  public WordDTO removeWord(final UUID id, final UUID wordId) {
+  public WordDTO removeWord(final String id, final String wordId) {
     log.info("remove word {} from code {}", wordId, id);
-    final Code code = codeRepository.findById(id).orElseThrow();
+    final Code code = codeRepository.findById(UUID.fromString(id)).orElseThrow();
     final WordDTO word = wordService.find(wordId).orElseThrow();
     code.removeWord(wordMapper.fromDTO(word));
     codeRepository.save(code);
     return word;
   }
 
-  public List<WordDTO> getWords(final UUID id) {
+  public List<WordDTO> getWords(final String id) {
     log.info("get words from code {}", id);
-    final Code code = codeRepository.findById(id).orElseThrow();
+    final Code code = codeRepository.findById(UUID.fromString(id)).orElseThrow();
     return wordMapper.toDTO(code.getWords());
   }
 }
