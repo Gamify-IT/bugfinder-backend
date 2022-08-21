@@ -3,8 +3,6 @@ package de.unistuttgart.bugfinder.code.word;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import lombok.AccessLevel;
-import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Component;
 
 @Component

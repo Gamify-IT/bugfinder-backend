@@ -2,7 +2,6 @@ package de.unistuttgart.bugfinder.code;
 
 import de.unistuttgart.bugfinder.code.word.Word;
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 import javax.persistence.*;
 import lombok.AccessLevel;

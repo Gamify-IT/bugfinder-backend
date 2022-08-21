@@ -47,7 +47,7 @@ services:
       - POSTGRES_URL=postgresql://postgres:postgres@login-db:5432/
 
   overworld-backend:
-    container_name:   overworld-backend
+    container_name: overworld-backend
     image: ghcr.io/gamify-it/overworld-backend:main
     restart: always
     pull_policy: always

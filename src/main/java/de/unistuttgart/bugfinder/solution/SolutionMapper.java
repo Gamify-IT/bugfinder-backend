@@ -1,7 +1,5 @@
 package de.unistuttgart.bugfinder.solution;
 
-import de.unistuttgart.bugfinder.solution.Solution;
-import de.unistuttgart.bugfinder.solution.SolutionDTO;
 import de.unistuttgart.bugfinder.solution.bug.BugMapper;
 import java.util.List;
 import java.util.Optional;

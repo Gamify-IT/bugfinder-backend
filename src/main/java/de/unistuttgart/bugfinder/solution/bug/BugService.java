@@ -18,22 +18,22 @@ public class BugService {
   private BugMapper bugMapper;
 
   public List<BugDTO> findAll() {
-    log.debug("get all bugs");
+    log.info("get all bugs");
     return bugMapper.toDTO(bugRepository.findAll());
   }
 
   public Optional<BugDTO> find(final UUID id) {
-    log.debug("get bug {}", id);
+    log.info("get bug {}", id);
     return bugMapper.toDTO(bugRepository.findById(id));
   }
 
   public BugDTO save(final BugDTO bugDTO) {
-    log.debug("create bug {}", bugDTO);
+    log.info("create bug {}", bugDTO);
     return bugMapper.toDTO(bugRepository.save(bugMapper.fromDTO(bugDTO)));
   }
 
   public void delete(final UUID id) {
-    log.debug("delete bug {}", id);
+    log.info("delete bug {}", id);
     bugRepository.deleteById(id);
   }
 }

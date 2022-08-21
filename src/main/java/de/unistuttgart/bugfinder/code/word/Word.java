@@ -1,8 +1,9 @@
 package de.unistuttgart.bugfinder.code.word;
 
-import java.util.Set;
 import java.util.UUID;
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;

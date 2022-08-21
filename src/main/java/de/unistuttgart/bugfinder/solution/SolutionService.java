@@ -27,27 +27,27 @@ public class SolutionService {
   private BugMapper bugMapper;
 
   public List<SolutionDTO> findAll() {
-    log.debug("get all solutions");
+    log.info("get all solutions");
     return solutionMapper.toDTO(solutionRepository.findAll());
   }
 
   public Optional<SolutionDTO> find(final UUID id) {
-    log.debug("get solution {}", id);
+    log.info("get solution {}", id);
     return solutionMapper.toDTO(solutionRepository.findById(id));
   }
 
   public SolutionDTO save(final SolutionDTO solutionDTO) {
-    log.debug("create solution {}", solutionDTO);
+    log.info("create solution {}", solutionDTO);
     return solutionMapper.toDTO(solutionRepository.save(solutionMapper.fromDTO(solutionDTO)));
   }
 
   public void delete(final UUID id) {
-    log.debug("delete solution {}", id);
+    log.info("delete solution {}", id);
     solutionRepository.deleteById(id);
   }
 
   public BugDTO addBug(final UUID id, final BugDTO bug) {
-    log.debug("add bug {} to solution {}", bug, id);
+    log.info("add bug {} to solution {}", bug, id);
     final Solution solution = solutionRepository.findById(id).orElseThrow();
     solution.addBug(bugMapper.fromDTO(bug));
     solutionRepository.save(solution);
@@ -55,7 +55,7 @@ public class SolutionService {
   }
 
   public BugDTO removeBug(final UUID id, final UUID bugId) {
-    log.debug("remove bug {} from solution {}", bugId, id);
+    log.info("remove bug {} from solution {}", bugId, id);
     final Solution solution = solutionRepository.findById(id).orElseThrow();
     final BugDTO bug = bugService.find(bugId).orElseThrow();
     solution.removeBug(bugMapper.fromDTO(bug));
@@ -64,7 +64,7 @@ public class SolutionService {
   }
 
   public List<BugDTO> getBugs(final UUID id) {
-    log.debug("get bugs from solution {}", id);
+    log.info("get bugs from solution {}", id);
     final Solution solution = solutionRepository.findById(id).orElseThrow();
     return bugMapper.toDTO(solution.getBugs());
   }

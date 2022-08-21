@@ -1,6 +1,5 @@
 package de.unistuttgart.bugfinder.solution;
 
-import de.unistuttgart.bugfinder.code.word.WordDTO;
 import de.unistuttgart.bugfinder.solution.bug.BugDTO;
 import java.util.List;
 import java.util.UUID;

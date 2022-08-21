@@ -18,20 +18,20 @@ public class ConfigurationController {
 
   @GetMapping("/configurations")
   public List<ConfigurationDTO> getAll() {
-    log.debug("GET /configurations");
+    log.info("GET /configurations");
     return configurationService.findAll();
   }
 
   @GetMapping("/configuration/{id}")
   public Optional<ConfigurationDTO> get(@PathVariable final UUID id) {
-    log.debug("GET /configuration/{}", id);
+    log.info("GET /configuration/{}", id);
     return configurationService.find(id);
   }
 
   @ResponseStatus(HttpStatus.CREATED)
   @PostMapping("/configuration")
   public ConfigurationDTO createConfiguration(@RequestBody final ConfigurationDTO configurationDTO) {
-    log.debug("POST /configuration with body {}", configurationDTO);
+    log.info("POST /configuration with body {}", configurationDTO);
     return configurationService.save(configurationDTO);
   }
 
@@ -40,32 +40,32 @@ public class ConfigurationController {
     @PathVariable final UUID id,
     @RequestBody final ConfigurationDTO configurationDTO
   ) {
-    log.debug("PUT /configuration/{} with body {}", id, configurationDTO);
+    log.info("PUT /configuration/{} with body {}", id, configurationDTO);
     return configurationService.save(configurationDTO);
   }
 
   @DeleteMapping("/configuration/{id}")
   public void deleteConfiguration(@PathVariable final UUID id) {
-    log.debug("DELETE /configuration/{}", id);
+    log.info("DELETE /configuration/{}", id);
     configurationService.delete(id);
   }
 
   @ResponseStatus(HttpStatus.CREATED)
   @PostMapping("/configuration/{id}/code")
   public CodeDTO addCode(@PathVariable final UUID id, @RequestBody final CodeDTO codeDTO) {
-    log.debug("POST /configuration/{}/code with body {}", id, codeDTO);
+    log.info("POST /configuration/{}/code with body {}", id, codeDTO);
     return configurationService.addCode(id, codeDTO);
   }
 
   @DeleteMapping("/configuration/{id}/code/{codeId}")
   public CodeDTO removeCode(@PathVariable final UUID id, @PathVariable final UUID codeId) {
-    log.debug("DELETE /configuration/{}/code/{}", id, codeId);
+    log.info("DELETE /configuration/{}/code/{}", id, codeId);
     return configurationService.removeCode(id, codeId);
   }
 
   @GetMapping("/configuration/{id}/codes")
   public List<CodeDTO> getCodes(@PathVariable final UUID id) {
-    log.debug("GET /configuration/{}/codes", id);
+    log.info("GET /configuration/{}/codes", id);
     return configurationService.getCodes(id);
   }
 }
