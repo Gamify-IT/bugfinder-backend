@@ -1,14 +1,13 @@
 package de.unistuttgart.bugfinder.solution.bug;
 
 import de.unistuttgart.bugfinder.code.word.Word;
+import java.util.UUID;
+import javax.persistence.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
-
-import javax.persistence.*;
-import java.util.UUID;
 
 @Entity
 @Data
@@ -16,20 +15,21 @@ import java.util.UUID;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Bug {
-    @Id
-    @GeneratedValue(generator = "uuid")
-    UUID id;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    Word word;
+  @Id
+  @GeneratedValue(generator = "uuid")
+  UUID id;
 
-    ErrorType errorType;
+  @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+  Word word;
 
-    String correctValue;
+  ErrorType errorType;
 
-    public Bug(final Word word, final ErrorType errorType, final String correctValue) {
-        this.word = word;
-        this.errorType = errorType;
-        this.correctValue = correctValue;
-    }
+  String correctValue;
+
+  public Bug(final Word word, final ErrorType errorType, final String correctValue) {
+    this.word = word;
+    this.errorType = errorType;
+    this.correctValue = correctValue;
+  }
 }

@@ -1,11 +1,10 @@
 package de.unistuttgart.bugfinder.configuration;
 
+import de.unistuttgart.bugfinder.code.Code;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 import javax.persistence.*;
-
-import de.unistuttgart.bugfinder.code.Code;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
