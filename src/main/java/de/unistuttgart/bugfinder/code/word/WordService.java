@@ -1,39 +1,40 @@
 package de.unistuttgart.bugfinder.code.word;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @Slf4j
 public class WordService {
 
-  @Autowired
-  private WordRepository wordRepository;
+    @Autowired
+    private WordRepository wordRepository;
 
-  @Autowired
-  private WordMapper wordMapper;
+    @Autowired
+    private WordMapper wordMapper;
 
-  public List<WordDTO> findAll() {
-    log.info("get all words");
-    return wordMapper.toDTO(wordRepository.findAll());
-  }
+    public List<WordDTO> findAll() {
+        log.info("get all words");
+        return wordMapper.toDTO(wordRepository.findAll());
+    }
 
-  public Optional<WordDTO> find(final String id) {
-    log.info("get word {}", id);
-    return wordMapper.toDTO(wordRepository.findById(UUID.fromString(id)));
-  }
+    public Optional<WordDTO> find(final String id) {
+        log.info("get word {}", id);
+        return wordMapper.toDTO(wordRepository.findById(UUID.fromString(id)));
+    }
 
-  public WordDTO save(final WordDTO wordDTO) {
-    log.info("create word {}", wordDTO);
-    return wordMapper.toDTO(wordRepository.save(wordMapper.fromDTO(wordDTO)));
-  }
+    public WordDTO save(final WordDTO wordDTO) {
+        log.info("create word {}", wordDTO);
+        return wordMapper.toDTO(wordRepository.save(wordMapper.fromDTO(wordDTO)));
+    }
 
-  public void delete(final String id) {
-    log.info("delete word {}", id);
-    wordRepository.deleteById(UUID.fromString(id));
-  }
+    public void delete(final String id) {
+        log.info("delete word {}", id);
+        wordRepository.deleteById(UUID.fromString(id));
+    }
 }

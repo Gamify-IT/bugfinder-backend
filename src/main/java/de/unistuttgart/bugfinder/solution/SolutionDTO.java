@@ -1,12 +1,13 @@
 package de.unistuttgart.bugfinder.solution;
 
 import de.unistuttgart.bugfinder.solution.bug.BugDTO;
-import java.util.List;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
+
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -14,6 +15,6 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class SolutionDTO {
 
-  String id;
-  List<BugDTO> bugs;
+    String id;
+    List<BugDTO> bugs;
 }
