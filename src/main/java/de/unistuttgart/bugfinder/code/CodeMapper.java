@@ -7,6 +7,7 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -22,7 +23,7 @@ public class CodeMapper {
         return new CodeDTO(code.getId().toString(), wordMapper.toDTO(code.getWords()));
     }
 
-    public List<CodeDTO> toDTO(final List<Code> codes) {
+    public List<CodeDTO> toDTO(final Collection<Code> codes) {
         return codes.stream().map(this::toDTO).collect(Collectors.toList());
     }
 
@@ -34,7 +35,7 @@ public class CodeMapper {
         return new Code(UuidUtil.ofNullableFallbackNull(codeDTO.getId()), wordMapper.fromDTO(codeDTO.getWords()));
     }
 
-    public List<Code> fromDTO(final List<CodeDTO> codeDTOs) {
+    public List<Code> fromDTO(final Collection<CodeDTO> codeDTOs) {
         return codeDTOs.stream().map(this::fromDTO).collect(Collectors.toList());
     }
 

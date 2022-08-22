@@ -7,6 +7,8 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -22,7 +24,7 @@ public class SolutionMapper {
         return new SolutionDTO(solution.getId().toString(), bugMapper.toDTO(solution.getBugs()));
     }
 
-    public List<SolutionDTO> toDTO(final List<Solution> solutions) {
+    public List<SolutionDTO> toDTO(final Collection<Solution> solutions) {
         return solutions.stream().map(this::toDTO).collect(Collectors.toList());
     }
 
@@ -31,10 +33,13 @@ public class SolutionMapper {
     }
 
     public Solution fromDTO(final SolutionDTO solutionDTO) {
-        return new Solution(UuidUtil.ofNullableFallbackNull(solutionDTO.getId()), bugMapper.fromDTO(solutionDTO.getBugs()));
+        return new Solution(
+                UuidUtil.ofNullableFallbackNull(solutionDTO.getId()),
+                new HashSet<>(bugMapper.fromDTO(solutionDTO.getBugs()))
+        );
     }
 
-    public List<Solution> fromDTO(final List<SolutionDTO> solutionDTOs) {
+    public List<Solution> fromDTO(final Collection<SolutionDTO> solutionDTOs) {
         return solutionDTOs.stream().map(this::fromDTO).collect(Collectors.toList());
     }
 

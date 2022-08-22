@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -23,9 +23,9 @@ public class Configuration {
     UUID id;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    List<Code> codes;
+    Set<Code> codes;
 
-    public Configuration(final List<Code> codes) {
+    public Configuration(final Set<Code> codes) {
         this.codes = codes;
     }
 

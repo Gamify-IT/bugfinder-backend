@@ -8,6 +8,7 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -31,7 +32,7 @@ public class BugMapper {
         );
     }
 
-    public List<BugDTO> toDTO(final List<Bug> bugs) {
+    public List<BugDTO> toDTO(final Collection<Bug> bugs) {
         return bugs.stream().map(this::toDTO).collect(Collectors.toList());
     }
 
@@ -48,7 +49,7 @@ public class BugMapper {
         );
     }
 
-    public List<Bug> fromDTO(final List<BugDTO> bugDTOs) {
+    public List<Bug> fromDTO(final Collection<BugDTO> bugDTOs) {
         return bugDTOs.stream().map(this::fromDTO).collect(Collectors.toList());
     }
 

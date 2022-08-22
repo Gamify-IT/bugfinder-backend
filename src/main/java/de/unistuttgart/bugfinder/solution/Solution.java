@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -23,9 +23,9 @@ public class Solution {
     UUID id;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    List<Bug> bugs;
+    Set<Bug> bugs;
 
-    public Solution(final List<Bug> bugs) {
+    public Solution(final Set<Bug> bugs) {
         this.bugs = bugs;
     }
 
