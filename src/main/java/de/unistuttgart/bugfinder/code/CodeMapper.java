@@ -1,6 +1,7 @@
 package de.unistuttgart.bugfinder.code;
 
 import de.unistuttgart.bugfinder.code.word.WordMapper;
+import de.unistuttgart.bugfinder.util.UuidUtil;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +9,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Component
@@ -31,7 +31,7 @@ public class CodeMapper {
     }
 
     public Code fromDTO(final CodeDTO codeDTO) {
-        return new Code(UUID.fromString(codeDTO.getId()), wordMapper.fromDTO(codeDTO.getWords()));
+        return new Code(UuidUtil.ofNullableFallbackNull(codeDTO.getId()), wordMapper.fromDTO(codeDTO.getWords()));
     }
 
     public List<Code> fromDTO(final List<CodeDTO> codeDTOs) {

@@ -1,6 +1,7 @@
 package de.unistuttgart.bugfinder.configuration;
 
 import de.unistuttgart.bugfinder.code.CodeMapper;
+import de.unistuttgart.bugfinder.util.UuidUtil;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +9,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Component
@@ -32,7 +32,7 @@ public class ConfigurationMapper {
 
     public Configuration fromDTO(final ConfigurationDTO configurationDTO) {
         return new Configuration(
-                UUID.fromString(configurationDTO.getId()),
+                UuidUtil.ofNullableFallbackNull(configurationDTO.getId()),
                 codeMapper.fromDTO(configurationDTO.getCodes())
         );
     }

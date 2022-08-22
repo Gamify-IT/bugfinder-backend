@@ -1,6 +1,5 @@
 package de.unistuttgart.bugfinder.solution.bug;
 
-import de.unistuttgart.bugfinder.code.word.WordDTO;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,7 +13,7 @@ import lombok.experimental.FieldDefaults;
 public class BugDTO {
 
     String id;
-    WordDTO word;
+    String wordId;
     ErrorType errorType;
     String correctValue;
 }

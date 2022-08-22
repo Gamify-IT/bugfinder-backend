@@ -50,9 +50,10 @@ public class CodeService {
     public WordDTO addWord(final String id, final WordDTO word) {
         log.info("add word {} to code {}", word, id);
         final Code code = codeRepository.findById(UUID.fromString(id)).orElseThrow();
-        code.addWord(wordMapper.fromDTO(word));
+        final WordDTO savedWord = wordService.save(word);
+        code.addWord(wordMapper.fromDTO(savedWord));
         codeRepository.save(code);
-        return word;
+        return savedWord;
     }
 
     public WordDTO removeWord(final String id, final String wordId) {

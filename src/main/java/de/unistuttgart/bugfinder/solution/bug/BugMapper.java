@@ -1,6 +1,8 @@
 package de.unistuttgart.bugfinder.solution.bug;
 
 import de.unistuttgart.bugfinder.code.word.WordMapper;
+import de.unistuttgart.bugfinder.code.word.WordRepository;
+import de.unistuttgart.bugfinder.util.UuidUtil;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +10,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Component
@@ -18,10 +19,13 @@ public class BugMapper {
     @Autowired
     private WordMapper wordMapper;
 
+    @Autowired
+    private WordRepository wordRepository;
+
     public BugDTO toDTO(final Bug bug) {
         return new BugDTO(
                 bug.getId().toString(),
-                wordMapper.toDTO(bug.getWord()),
+                bug.getWord().getId().toString(),
                 bug.getErrorType(),
                 bug.getCorrectValue()
         );
@@ -37,8 +41,8 @@ public class BugMapper {
 
     public Bug fromDTO(final BugDTO bugDTO) {
         return new Bug(
-                UUID.fromString(bugDTO.getId()),
-                wordMapper.fromDTO(bugDTO.getWord()),
+                UuidUtil.ofNullableFallbackNull(bugDTO.getId()),
+                wordRepository.findById(UuidUtil.ofNullableFallbackNull(bugDTO.getWordId())).orElseThrow(),
                 bugDTO.getErrorType(),
                 bugDTO.getCorrectValue()
         );

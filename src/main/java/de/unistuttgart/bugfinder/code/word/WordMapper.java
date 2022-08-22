@@ -1,10 +1,10 @@
 package de.unistuttgart.bugfinder.code.word;
 
+import de.unistuttgart.bugfinder.util.UuidUtil;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Component
@@ -23,7 +23,7 @@ public class WordMapper {
     }
 
     public Word fromDTO(final WordDTO wordDTO) {
-        return new Word(UUID.fromString(wordDTO.getId()), wordDTO.getWord());
+        return new Word(UuidUtil.ofNullableFallbackNull(wordDTO.getId()), wordDTO.getWord());
     }
 
     public List<Word> fromDTO(final List<WordDTO> wordDTOs) {

@@ -50,9 +50,10 @@ public class ConfigurationService {
     public CodeDTO addCode(final String id, final CodeDTO code) {
         log.info("add code {} to configuration {}", code, id);
         final Configuration configuration = configurationRepository.findById(UUID.fromString(id)).orElseThrow();
-        configuration.addCode(codeMapper.fromDTO(code));
+        final CodeDTO savedCode = codeService.save(code);
+        configuration.addCode(codeMapper.fromDTO(savedCode));
         configurationRepository.save(configuration);
-        return code;
+        return savedCode;
     }
 
     public CodeDTO removeCode(final String id, final String codeId) {

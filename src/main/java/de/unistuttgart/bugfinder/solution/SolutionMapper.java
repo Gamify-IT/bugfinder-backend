@@ -1,6 +1,7 @@
 package de.unistuttgart.bugfinder.solution;
 
 import de.unistuttgart.bugfinder.solution.bug.BugMapper;
+import de.unistuttgart.bugfinder.util.UuidUtil;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +9,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Component
@@ -31,7 +31,7 @@ public class SolutionMapper {
     }
 
     public Solution fromDTO(final SolutionDTO solutionDTO) {
-        return new Solution(UUID.fromString(solutionDTO.getId()), bugMapper.fromDTO(solutionDTO.getBugs()));
+        return new Solution(UuidUtil.ofNullableFallbackNull(solutionDTO.getId()), bugMapper.fromDTO(solutionDTO.getBugs()));
     }
 
     public List<Solution> fromDTO(final List<SolutionDTO> solutionDTOs) {

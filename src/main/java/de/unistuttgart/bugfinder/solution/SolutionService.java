@@ -50,9 +50,10 @@ public class SolutionService {
     public BugDTO addBug(final String id, final BugDTO bug) {
         log.info("add bug {} to solution {}", bug, id);
         final Solution solution = solutionRepository.findById(UUID.fromString(id)).orElseThrow();
-        solution.addBug(bugMapper.fromDTO(bug));
+        final BugDTO savedBug = bugService.save(bug);
+        solution.addBug(bugMapper.fromDTO(savedBug));
         solutionRepository.save(solution);
-        return bug;
+        return savedBug;
     }
 
     public BugDTO removeBug(final String id, final String bugId) {

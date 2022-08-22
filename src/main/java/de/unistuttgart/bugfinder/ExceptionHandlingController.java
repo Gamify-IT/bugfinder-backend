@@ -19,8 +19,8 @@ public class ExceptionHandlingController {
 
     @ExceptionHandler(IllegalArgumentException.class)
     public void handleError(HttpServletRequest request, HttpServletResponse response, IllegalArgumentException ex) {
-        if (ex.getMessage().contains("Invalid UUID string: codes")) {
-            response.setStatus(HttpStatus.BAD_REQUEST.value());
-        }
+        //    if (ex.getMessage().contains("Invalid UUID string: codes")) {
+        //      response.setStatus(HttpStatus.BAD_REQUEST.value());
+        //    }
     }
 }
