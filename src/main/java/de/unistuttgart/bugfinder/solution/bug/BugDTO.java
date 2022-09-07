@@ -12,8 +12,8 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class BugDTO {
 
-    String id;
-    String wordId;
-    ErrorType errorType;
-    String correctValue;
+  String id;
+  String wordId;
+  ErrorType errorType;
+  String correctValue;
 }

@@ -12,6 +12,6 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class WordDTO {
 
-    String id;
-    String word;
+  String id;
+  String word;
 }
