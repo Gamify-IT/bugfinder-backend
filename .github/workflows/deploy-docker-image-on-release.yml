@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - "main"
-      - "feature-bugfinder-backend"
+      - "feature/bugfinder-backend"
     tags:
       - "v*"
   pull_request:
