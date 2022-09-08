@@ -1,6 +1,6 @@
-# Chickenshock-Backend
+# Bugfinder-Backend
 
-This repo serves to persist the chickenshock data in a db and to communicate with different Microservices.
+This repo serves to persist the bugfinder data in a db and to communicate with different Microservices.
 
 # Development
 
@@ -34,7 +34,7 @@ in the folder of the project.
 Go to the target folder and run
 
 ```sh
-java -jar crossword-service-0.0.1-SNAPSHOT.jar
+java -jar bugfinder-service-0.0.1-SNAPSHOT.jar
 ```
 
 ### With Docker
@@ -42,33 +42,33 @@ java -jar crossword-service-0.0.1-SNAPSHOT.jar
 Build the Docker container with
 
 ```sh
-docker build  -t chickenshock-backend-dev .
+docker build  -t bugfinder-backend-dev .
 ```
 
 And run it at port 8000 with
 
 ```
-docker run -d -p 8000:80 -e POSTGRES_URL="postgresql://host.docker.internal:5432/postgres" -e POSTGRES_USER="postgres" -e POSTGRES_PASSWORD="postgres" --name chickenshock-backend-dev chickenshock-backend-dev
+docker run -d -p 8000:80 -e POSTGRES_URL="postgresql://host.docker.internal:5432/postgres" -e POSTGRES_USER="postgres" -e POSTGRES_PASSWORD="postgres" --name bugfinder-backend-dev bugfinder-backend-dev
 ```
 
 To monitor, stop and remove the container you can use the following commands:
 
 ```sh
-docker ps -a -f name=chickenshock-backend-dev
+docker ps -a -f name=bugfinder-backend-dev
 ```
 
 ```sh
-docker stop chickenshock-backend-dev
+docker stop bugfinder-backend-dev
 ```
 
 ```sh
-docker rm chickenshock-backend-dev
+docker rm bugfinder-backend-dev
 ```
 
 To run the prebuild container use
 
 ```sh
-docker run -d -p 8000:80 -e POSTGRES_URL="postgresql://host.docker.internal:5432/postgres" -e POSTGRES_USER="postgres" -e POSTGRES_PASSWORD="postgres" --name chickenshock-backend ghcr.io/gamify-it/chickenshock-backend:latest
+docker run -d -p 8000:80 -e POSTGRES_URL="postgresql://host.docker.internal:5432/postgres" -e POSTGRES_USER="postgres" -e POSTGRES_PASSWORD="postgres" --name bugfinder-backend ghcr.io/gamify-it/bugfinder-backend:latest
 ```
 
 ### testing database
@@ -76,11 +76,11 @@ docker run -d -p 8000:80 -e POSTGRES_URL="postgresql://host.docker.internal:5432
 to setup a database with docker for testing you can use
 
 ```sh
-docker run -d -p 5432:5432 -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=postgres  --rm --name chickenshock-database postgres
+docker run -d -p 5432:5432 -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=postgres  --rm --name bugfinder-database postgres
 ```
 
 To stop and remove it simply type
 
 ```sh
-docker stop chickenshock-database
+docker stop bugfinder-database
 ```
