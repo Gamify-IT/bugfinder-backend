@@ -24,11 +24,7 @@ public class SolutionMapper {
   private CodeMapper codeMapper;
 
   public SolutionDTO toDTO(final Solution solution) {
-    return new SolutionDTO(
-      solution.getId().toString(),
-      bugMapper.toDTO(solution.getBugs()),
-      codeMapper.toDTO(solution.getCode())
-    );
+    return new SolutionDTO(solution.getId(), bugMapper.toDTO(solution.getBugs()), codeMapper.toDTO(solution.getCode()));
   }
 
   public List<SolutionDTO> toDTO(final Collection<Solution> solutions) {
@@ -41,7 +37,7 @@ public class SolutionMapper {
 
   public Solution fromDTO(final SolutionDTO solutionDTO) {
     return new Solution(
-      UuidUtil.ofNullableFallbackNull(solutionDTO.getId()),
+      solutionDTO.getId(),
       new HashSet<>(bugMapper.fromDTO(solutionDTO.getBugs())),
       codeMapper.fromDTO(solutionDTO.getCode())
     );

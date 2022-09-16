@@ -1,10 +1,12 @@
 package de.unistuttgart.bugfinder.solution.bug;
 
+import java.util.UUID;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.lang.Nullable;
 
 @Data
 @NoArgsConstructor
@@ -12,7 +14,9 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class BugDTO {
 
-  String id;
+  @Nullable
+  UUID id;
+
   String wordId;
   ErrorType errorType;
   String correctValue;

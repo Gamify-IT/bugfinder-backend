@@ -19,7 +19,7 @@ public class CodeMapper {
   private WordMapper wordMapper;
 
   public CodeDTO toDTO(final Code code) {
-    return new CodeDTO(code.getId().toString(), wordMapper.toDTO(code.getWords()));
+    return new CodeDTO(code.getId(), wordMapper.toDTO(code.getWords()));
   }
 
   public List<CodeDTO> toDTO(final Collection<Code> codes) {
@@ -31,7 +31,7 @@ public class CodeMapper {
   }
 
   public Code fromDTO(final CodeDTO codeDTO) {
-    return new Code(UuidUtil.ofNullableFallbackNull(codeDTO.getId()), wordMapper.fromDTO(codeDTO.getWords()));
+    return new Code(codeDTO.getId(), wordMapper.fromDTO(codeDTO.getWords()));
   }
 
   public List<Code> fromDTO(final Collection<CodeDTO> codeDTOs) {

@@ -23,12 +23,7 @@ public class BugMapper {
   private WordRepository wordRepository;
 
   public BugDTO toDTO(final Bug bug) {
-    return new BugDTO(
-      bug.getId().toString(),
-      bug.getWord().getId().toString(),
-      bug.getErrorType(),
-      bug.getCorrectValue()
-    );
+    return new BugDTO(bug.getId(), bug.getWord().getId().toString(), bug.getErrorType(), bug.getCorrectValue());
   }
 
   public List<BugDTO> toDTO(final Collection<Bug> bugs) {
@@ -41,7 +36,7 @@ public class BugMapper {
 
   public Bug fromDTO(final BugDTO bugDTO) {
     return new Bug(
-      UuidUtil.ofNullableFallbackNull(bugDTO.getId()),
+      bugDTO.getId(),
       wordRepository.findById(UuidUtil.ofNullableFallbackNull(bugDTO.getWordId())).orElseThrow(),
       bugDTO.getErrorType(),
       bugDTO.getCorrectValue()

@@ -19,7 +19,7 @@ public class ConfigurationMapper {
   private CodeMapper codeMapper;
 
   public ConfigurationDTO toDTO(final Configuration configuration) {
-    return new ConfigurationDTO(configuration.getId().toString(), codeMapper.toDTO(configuration.getCodes()));
+    return new ConfigurationDTO(configuration.getId(), codeMapper.toDTO(configuration.getCodes()));
   }
 
   public List<ConfigurationDTO> toDTO(final List<Configuration> codes) {
@@ -31,10 +31,7 @@ public class ConfigurationMapper {
   }
 
   public Configuration fromDTO(final ConfigurationDTO configurationDTO) {
-    return new Configuration(
-      UuidUtil.ofNullableFallbackNull(configurationDTO.getId()),
-      new HashSet<>(codeMapper.fromDTO(configurationDTO.getCodes()))
-    );
+    return new Configuration(configurationDTO.getId(), new HashSet<>(codeMapper.fromDTO(configurationDTO.getCodes())));
   }
 
   public List<Configuration> fromDTO(final List<ConfigurationDTO> codeDTOs) {
