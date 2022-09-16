@@ -41,18 +41,18 @@ services:
     command:
       - "start-dev"
     environment:
-      KEYCLOAK_ADMIN: admin
-      KEYCLOAK_ADMIN_PASSWORD: admin
+      - KEYCLOAK_ADMIN=admin
+      - KEYCLOAK_ADMIN_PASSWORD=admin
 
-      KC_DB: postgres
-      KC_DB_URL: jdbc:postgresql://keycloak-db:5432/postgres
-      KC_DB_USERNAME: postgres
-      KC_DB_PASSWORD: postgres
+      - KC_DB=postgres
+      - KC_DB_URL=jdbc:postgresql://keycloak-db:5432/postgres
+      - KC_DB_USERNAME=postgres
+      - KC_DB_PASSWORD=postgres
 
-      KC_HOSTNAME_STRICT: false
-      KC_PROXY: edge
-      KC_HTTP_RELATIVE_PATH: /keycloak
-      KC_HTTP_PORT: 80
+      - KC_HOSTNAME_STRICT=false
+      - KC_PROXY=edge
+      - KC_HTTP_RELATIVE_PATH=/keycloak
+      - KC_HTTP_PORT=80
 
   overworld-backend:
     container_name: overworld-backend
