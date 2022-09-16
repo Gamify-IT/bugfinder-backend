@@ -1,5 +1,7 @@
 package de.unistuttgart.bugfinder.code;
 
+import static org.springframework.http.HttpStatus.NOT_FOUND;
+
 import de.unistuttgart.bugfinder.code.word.WordDTO;
 import de.unistuttgart.bugfinder.code.word.WordMapper;
 import de.unistuttgart.bugfinder.code.word.WordService;
@@ -12,6 +14,7 @@ import java.util.UUID;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 @Slf4j
@@ -57,7 +60,9 @@ public class CodeService {
 
   public WordDTO addWord(final UUID id, final WordDTO word) {
     log.info("add word {} to code {}", word, id);
-    final Code code = codeRepository.findById(id).orElseThrow();
+    final Code code = codeRepository
+      .findById(id)
+      .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, String.format("Unable to find code with id %s", id)));
     final WordDTO savedWord = wordService.save(word);
     code.addWord(wordMapper.fromDTO(savedWord));
     codeRepository.save(code);
@@ -66,8 +71,12 @@ public class CodeService {
 
   public WordDTO removeWord(final UUID id, final UUID wordId) {
     log.info("remove word {} from code {}", wordId, id);
-    final Code code = codeRepository.findById(id).orElseThrow();
-    final WordDTO word = wordService.find(wordId).orElseThrow();
+    final Code code = codeRepository
+      .findById(id)
+      .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, String.format("Unable to find code with id %s", id)));
+    final WordDTO word = wordService
+      .find(wordId)
+      .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, String.format("Unable to find word with id %s", id)));
     code.removeWord(wordMapper.fromDTO(word));
     codeRepository.save(code);
     return word;
@@ -75,11 +84,19 @@ public class CodeService {
 
   public List<WordDTO> getWords(final UUID id) {
     log.info("get words from code {}", id);
-    final Code code = codeRepository.findById(id).orElseThrow();
+    final Code code = codeRepository
+      .findById(id)
+      .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, String.format("Unable to find code with id %s", id)));
     return wordMapper.toDTO(code.getWords());
   }
 
   public SolutionDTO getSolution(UUID id) {
-    return solutionMapper.toDTO(solutionRepository.findByCodeId(id).orElseThrow());
+    return solutionMapper.toDTO(
+      solutionRepository
+        .findByCodeId(id)
+        .orElseThrow(() ->
+          new ResponseStatusException(NOT_FOUND, String.format("Unable to find solution with id %s", id))
+        )
+    );
   }
 }

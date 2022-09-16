@@ -59,7 +59,7 @@ public class ConfigurationController extends ExceptionHandlingController {
   }
 
   @DeleteMapping("/configurations/{id}/codes/{codeId}")
-  public CodeDTO removeCode(@PathVariable final UUID id, @PathVariable final String codeId) {
+  public CodeDTO removeCode(@PathVariable final UUID id, @PathVariable final UUID codeId) {
     log.info("DELETE /configurations/{}/codes/{}", id, codeId);
     return configurationService.removeCode(id, codeId);
   }
