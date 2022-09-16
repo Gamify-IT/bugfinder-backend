@@ -49,15 +49,15 @@ public class SolutionController extends ExceptionHandlingController {
   }
 
   @ResponseStatus(HttpStatus.CREATED)
-  @PostMapping("/solutions/{id}/bug")
+  @PostMapping("/solutions/{id}/bugs")
   public BugDTO addBug(@PathVariable final UUID id, @RequestBody final BugDTO bugDTO) {
-    log.info("POST /solutions/{}/bug with body {}", id, bugDTO);
+    log.info("POST /solutions/{}/bugs with body {}", id, bugDTO);
     return solutionService.addBug(id, bugDTO);
   }
 
-  @DeleteMapping("/solutions/{id}/bug/{bugId}")
+  @DeleteMapping("/solutions/{id}/bugs/{bugId}")
   public BugDTO removeBug(@PathVariable final UUID id, @PathVariable final UUID bugId) {
-    log.info("DELETE /solutions/{}/bug/{}", id, bugId);
+    log.info("DELETE /solutions/{}/bugs/{}", id, bugId);
     return solutionService.removeBug(id, bugId);
   }
 

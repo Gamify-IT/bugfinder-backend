@@ -24,53 +24,53 @@ public class CodeController extends ExceptionHandlingController {
     return codeService.findAll();
   }
 
-  @GetMapping("/code/{id}")
+  @GetMapping("/codes/{id}")
   public Optional<CodeDTO> get(@PathVariable final UUID id) {
-    log.info("GET /code/{}", id);
+    log.info("GET /codes/{}", id);
     return codeService.find(id);
   }
 
   @ResponseStatus(HttpStatus.CREATED)
-  @PostMapping("/code")
+  @PostMapping("/codes")
   public CodeDTO createCode(@RequestBody final CodeDTO codeDTO) {
-    log.info("POST /code with body {}", codeDTO);
+    log.info("POST /codes with body {}", codeDTO);
     return codeService.save(codeDTO);
   }
 
-  @PutMapping("/code/{id}")
+  @PutMapping("/codes/{id}")
   public CodeDTO updateCode(@PathVariable final UUID id, @RequestBody final CodeDTO codeDTO) {
-    log.info("PUT /code/{} with body {}", id, codeDTO);
+    log.info("PUT /codes/{} with body {}", id, codeDTO);
     return codeService.save(codeDTO);
   }
 
-  @DeleteMapping("/code/{id}")
+  @DeleteMapping("/codes/{id}")
   public void deleteCode(@PathVariable final UUID id) {
-    log.info("DELETE /code/{}", id);
+    log.info("DELETE /codes/{}", id);
     codeService.delete(id);
   }
 
   @ResponseStatus(HttpStatus.CREATED)
-  @PostMapping("/code/{id}/word")
+  @PostMapping("/codes/{id}/words")
   public WordDTO addWord(@PathVariable final UUID id, @RequestBody final WordDTO wordDTO) {
-    log.info("POST /code/{}/word with body {}", id, wordDTO);
+    log.info("POST /codes/{}/words with body {}", id, wordDTO);
     return codeService.addWord(id, wordDTO);
   }
 
-  @DeleteMapping("/code/{id}/word/{wordId}")
+  @DeleteMapping("/codes/{id}/words/{wordId}")
   public WordDTO removeWord(@PathVariable final UUID id, @PathVariable final UUID wordId) {
-    log.info("DELETE /code/{}/word/{}", id, wordId);
+    log.info("DELETE /codes/{}/words/{}", id, wordId);
     return codeService.removeWord(id, wordId);
   }
 
-  @GetMapping("/code/{id}/words")
+  @GetMapping("/codes/{id}/words")
   public List<WordDTO> getWords(@PathVariable final UUID id) {
-    log.info("GET /code/{}/words", id);
+    log.info("GET /codes/{}/words", id);
     return codeService.getWords(id);
   }
 
-  @GetMapping("/code/{id}/solution")
+  @GetMapping("/codes/{id}/solutions")
   public SolutionDTO getSolution(@PathVariable final UUID id) {
-    log.info("GET /code/{}/solution", id);
+    log.info("GET /codes/{}/solutions", id);
     return codeService.getSolution(id);
   }
 }

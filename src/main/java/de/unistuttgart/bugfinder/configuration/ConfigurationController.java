@@ -52,15 +52,15 @@ public class ConfigurationController extends ExceptionHandlingController {
   }
 
   @ResponseStatus(HttpStatus.CREATED)
-  @PostMapping("/configurations/{id}/code")
+  @PostMapping("/configurations/{id}/codes")
   public CodeDTO addCode(@PathVariable final UUID id, @RequestBody final CodeDTO codeDTO) {
-    log.info("POST /configurations/{}/code with body {}", id, codeDTO);
+    log.info("POST /configurations/{}/codes with body {}", id, codeDTO);
     return configurationService.addCode(id, codeDTO);
   }
 
-  @DeleteMapping("/configurations/{id}/code/{codeId}")
+  @DeleteMapping("/configurations/{id}/codes/{codeId}")
   public CodeDTO removeCode(@PathVariable final UUID id, @PathVariable final String codeId) {
-    log.info("DELETE /configurations/{}/code/{}", id, codeId);
+    log.info("DELETE /configurations/{}/codes/{}", id, codeId);
     return configurationService.removeCode(id, codeId);
   }
 
