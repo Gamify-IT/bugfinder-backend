@@ -8,7 +8,9 @@ import java.util.Optional;
 import java.util.UUID;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 @Slf4j
@@ -41,9 +43,15 @@ public class ConfigurationService {
     return configurationMapper.toDTO(configurationRepository.save(configurationMapper.fromDTO(configurationDTO)));
   }
 
-  public void delete(final UUID id) {
+  public ConfigurationDTO delete(final UUID id) {
     log.info("delete configuration {}", id);
+    Configuration configuration = configurationRepository
+      .findById(id)
+      .orElseThrow(() ->
+        new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("Configuration with id %s not found.", id))
+      );
     configurationRepository.deleteById(id);
+    return configurationMapper.toDTO(configuration);
   }
 
   public CodeDTO addCode(final UUID id, final CodeDTO code) {

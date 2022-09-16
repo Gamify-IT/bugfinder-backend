@@ -46,9 +46,9 @@ public class ConfigurationController extends ExceptionHandlingController {
   }
 
   @DeleteMapping("/configurations/{id}")
-  public void deleteConfiguration(@PathVariable final UUID id) {
+  public ConfigurationDTO deleteConfiguration(@PathVariable final UUID id) {
     log.info("DELETE /configurations/{}", id);
-    configurationService.delete(id);
+    return configurationService.delete(id);
   }
 
   @ResponseStatus(HttpStatus.CREATED)

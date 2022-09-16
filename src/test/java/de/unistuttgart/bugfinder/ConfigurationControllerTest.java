@@ -137,4 +137,20 @@ public class ConfigurationControllerTest {
 
     assertSame(2, configurationRepository.findAll().size());
   }
+
+  @Test
+  void deleteConfiguration() throws Exception {
+    final MvcResult result = mvc
+      .perform(delete(API_URL + "/" + initialConfig.getId()).contentType(MediaType.APPLICATION_JSON))
+      .andExpect(status().isOk())
+      .andReturn();
+
+    final ConfigurationDTO configuration = objectMapper.readValue(
+      result.getResponse().getContentAsString(),
+      ConfigurationDTO.class
+    );
+
+    assertEquals(initialConfigDTO, configuration);
+    assertTrue(configurationRepository.findById(initialConfig.getId()).isEmpty());
+  }
 }
