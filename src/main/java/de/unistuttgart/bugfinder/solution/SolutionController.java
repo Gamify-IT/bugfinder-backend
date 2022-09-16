@@ -22,47 +22,47 @@ public class SolutionController extends ExceptionHandlingController {
     return solutionService.findAll();
   }
 
-  @GetMapping("/solution/{id}")
+  @GetMapping("/solutions/{id}")
   public Optional<SolutionDTO> get(@PathVariable final String id) {
-    log.info("GET /solution/{}", id);
+    log.info("GET /solutions/{}", id);
     return solutionService.find(id);
   }
 
   @ResponseStatus(HttpStatus.CREATED)
-  @PostMapping("/solution")
+  @PostMapping("/solutions")
   public SolutionDTO createSolution(@RequestBody final SolutionDTO solutionDTO) {
-    log.info("POST /solution with body {}", solutionDTO);
+    log.info("POST /solutions with body {}", solutionDTO);
     return solutionService.save(solutionDTO);
   }
 
-  @PutMapping("/solution/{id}")
+  @PutMapping("/solutions/{id}")
   public SolutionDTO updateSolution(@PathVariable final String id, @RequestBody final SolutionDTO solutionDTO) {
-    log.info("PUT /solution/{} with body {}", id, solutionDTO);
+    log.info("PUT /solutions/{} with body {}", id, solutionDTO);
     return solutionService.save(solutionDTO);
   }
 
-  @DeleteMapping("/solution/{id}")
+  @DeleteMapping("/solutions/{id}")
   public void deleteSolution(@PathVariable final String id) {
-    log.info("DELETE /solution/{}", id);
+    log.info("DELETE /solutions/{}", id);
     solutionService.delete(id);
   }
 
   @ResponseStatus(HttpStatus.CREATED)
-  @PostMapping("/solution/{id}/bug")
+  @PostMapping("/solutions/{id}/bug")
   public BugDTO addBug(@PathVariable final String id, @RequestBody final BugDTO bugDTO) {
-    log.info("POST /solution/{}/bug with body {}", id, bugDTO);
+    log.info("POST /solutions/{}/bug with body {}", id, bugDTO);
     return solutionService.addBug(id, bugDTO);
   }
 
-  @DeleteMapping("/solution/{id}/bug/{bugId}")
+  @DeleteMapping("/solutions/{id}/bug/{bugId}")
   public BugDTO removeBug(@PathVariable final String id, @PathVariable final String bugId) {
-    log.info("DELETE /solution/{}/bug/{}", id, bugId);
+    log.info("DELETE /solutions/{}/bug/{}", id, bugId);
     return solutionService.removeBug(id, bugId);
   }
 
-  @GetMapping("/solution/{id}/bugs")
+  @GetMapping("/solutions/{id}/bugs")
   public List<BugDTO> getBugs(@PathVariable final String id) {
-    log.info("GET /solution/{}/bugs", id);
+    log.info("GET /solutions/{}/bugs", id);
     return solutionService.getBugs(id);
   }
 }
