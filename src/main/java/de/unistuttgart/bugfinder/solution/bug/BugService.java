@@ -22,9 +22,9 @@ public class BugService {
     return bugMapper.toDTO(bugRepository.findAll());
   }
 
-  public Optional<BugDTO> find(final String id) {
+  public Optional<BugDTO> find(final UUID id) {
     log.info("get bug {}", id);
-    return bugMapper.toDTO(bugRepository.findById(UUID.fromString(id)));
+    return bugMapper.toDTO(bugRepository.findById(id));
   }
 
   public BugDTO save(final BugDTO bugDTO) {
@@ -32,8 +32,8 @@ public class BugService {
     return bugMapper.toDTO(bugRepository.save(bugMapper.fromDTO(bugDTO)));
   }
 
-  public void delete(final String id) {
+  public void delete(final UUID id) {
     log.info("delete bug {}", id);
-    bugRepository.deleteById(UUID.fromString(id));
+    bugRepository.deleteById(id);
   }
 }

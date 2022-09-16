@@ -17,7 +17,7 @@ public class BugDTO {
   @Nullable
   UUID id;
 
-  String wordId;
+  UUID wordId;
   ErrorType errorType;
   String correctValue;
 }

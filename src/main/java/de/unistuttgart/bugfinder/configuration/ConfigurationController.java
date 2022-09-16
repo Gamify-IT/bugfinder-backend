@@ -4,6 +4,7 @@ import de.unistuttgart.bugfinder.ExceptionHandlingController;
 import de.unistuttgart.bugfinder.code.CodeDTO;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,7 +24,7 @@ public class ConfigurationController extends ExceptionHandlingController {
   }
 
   @GetMapping("/configurations/{id}")
-  public Optional<ConfigurationDTO> get(@PathVariable final String id) {
+  public Optional<ConfigurationDTO> get(@PathVariable final UUID id) {
     log.info("GET /configurations/{}", id);
     return configurationService.find(id);
   }
@@ -37,7 +38,7 @@ public class ConfigurationController extends ExceptionHandlingController {
 
   @PutMapping("/configurations/{id}")
   public ConfigurationDTO updateConfiguration(
-    @PathVariable final String id,
+    @PathVariable final UUID id,
     @RequestBody final ConfigurationDTO configurationDTO
   ) {
     log.info("PUT /configurations/{} with body {}", id, configurationDTO);
@@ -45,26 +46,26 @@ public class ConfigurationController extends ExceptionHandlingController {
   }
 
   @DeleteMapping("/configurations/{id}")
-  public void deleteConfiguration(@PathVariable final String id) {
+  public void deleteConfiguration(@PathVariable final UUID id) {
     log.info("DELETE /configurations/{}", id);
     configurationService.delete(id);
   }
 
   @ResponseStatus(HttpStatus.CREATED)
   @PostMapping("/configurations/{id}/code")
-  public CodeDTO addCode(@PathVariable final String id, @RequestBody final CodeDTO codeDTO) {
+  public CodeDTO addCode(@PathVariable final UUID id, @RequestBody final CodeDTO codeDTO) {
     log.info("POST /configurations/{}/code with body {}", id, codeDTO);
     return configurationService.addCode(id, codeDTO);
   }
 
   @DeleteMapping("/configurations/{id}/code/{codeId}")
-  public CodeDTO removeCode(@PathVariable final String id, @PathVariable final String codeId) {
+  public CodeDTO removeCode(@PathVariable final UUID id, @PathVariable final String codeId) {
     log.info("DELETE /configurations/{}/code/{}", id, codeId);
     return configurationService.removeCode(id, codeId);
   }
 
   @GetMapping("/configurations/{id}/codes")
-  public List<CodeDTO> getCodes(@PathVariable final String id) {
+  public List<CodeDTO> getCodes(@PathVariable final UUID id) {
     log.info("GET /configurations/{}/codes", id);
     return configurationService.getCodes(id);
   }

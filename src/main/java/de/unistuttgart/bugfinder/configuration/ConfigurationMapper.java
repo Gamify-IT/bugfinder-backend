@@ -1,7 +1,6 @@
 package de.unistuttgart.bugfinder.configuration;
 
 import de.unistuttgart.bugfinder.code.CodeMapper;
-import de.unistuttgart.bugfinder.util.UuidUtil;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;

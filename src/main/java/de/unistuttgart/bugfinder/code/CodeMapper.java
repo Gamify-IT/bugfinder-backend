@@ -1,7 +1,6 @@
 package de.unistuttgart.bugfinder.code;
 
 import de.unistuttgart.bugfinder.code.word.WordMapper;
-import de.unistuttgart.bugfinder.util.UuidUtil;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;

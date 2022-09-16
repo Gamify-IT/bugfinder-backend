@@ -22,9 +22,9 @@ public class WordService {
     return wordMapper.toDTO(wordRepository.findAll());
   }
 
-  public Optional<WordDTO> find(final String id) {
+  public Optional<WordDTO> find(final UUID id) {
     log.info("get word {}", id);
-    return wordMapper.toDTO(wordRepository.findById(UUID.fromString(id)));
+    return wordMapper.toDTO(wordRepository.findById(id));
   }
 
   public WordDTO save(final WordDTO wordDTO) {
@@ -32,8 +32,8 @@ public class WordService {
     return wordMapper.toDTO(wordRepository.save(wordMapper.fromDTO(wordDTO)));
   }
 
-  public void delete(final String id) {
+  public void delete(final UUID id) {
     log.info("delete word {}", id);
-    wordRepository.deleteById(UUID.fromString(id));
+    wordRepository.deleteById(id);
   }
 }

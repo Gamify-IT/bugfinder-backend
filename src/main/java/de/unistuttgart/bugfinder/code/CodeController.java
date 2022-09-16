@@ -5,6 +5,7 @@ import de.unistuttgart.bugfinder.code.word.WordDTO;
 import de.unistuttgart.bugfinder.solution.SolutionDTO;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,7 +25,7 @@ public class CodeController extends ExceptionHandlingController {
   }
 
   @GetMapping("/code/{id}")
-  public Optional<CodeDTO> get(@PathVariable final String id) {
+  public Optional<CodeDTO> get(@PathVariable final UUID id) {
     log.info("GET /code/{}", id);
     return codeService.find(id);
   }
@@ -37,38 +38,38 @@ public class CodeController extends ExceptionHandlingController {
   }
 
   @PutMapping("/code/{id}")
-  public CodeDTO updateCode(@PathVariable final String id, @RequestBody final CodeDTO codeDTO) {
+  public CodeDTO updateCode(@PathVariable final UUID id, @RequestBody final CodeDTO codeDTO) {
     log.info("PUT /code/{} with body {}", id, codeDTO);
     return codeService.save(codeDTO);
   }
 
   @DeleteMapping("/code/{id}")
-  public void deleteCode(@PathVariable final String id) {
+  public void deleteCode(@PathVariable final UUID id) {
     log.info("DELETE /code/{}", id);
     codeService.delete(id);
   }
 
   @ResponseStatus(HttpStatus.CREATED)
   @PostMapping("/code/{id}/word")
-  public WordDTO addWord(@PathVariable final String id, @RequestBody final WordDTO wordDTO) {
+  public WordDTO addWord(@PathVariable final UUID id, @RequestBody final WordDTO wordDTO) {
     log.info("POST /code/{}/word with body {}", id, wordDTO);
     return codeService.addWord(id, wordDTO);
   }
 
   @DeleteMapping("/code/{id}/word/{wordId}")
-  public WordDTO removeWord(@PathVariable final String id, @PathVariable final String wordId) {
+  public WordDTO removeWord(@PathVariable final UUID id, @PathVariable final UUID wordId) {
     log.info("DELETE /code/{}/word/{}", id, wordId);
     return codeService.removeWord(id, wordId);
   }
 
   @GetMapping("/code/{id}/words")
-  public List<WordDTO> getWords(@PathVariable final String id) {
+  public List<WordDTO> getWords(@PathVariable final UUID id) {
     log.info("GET /code/{}/words", id);
     return codeService.getWords(id);
   }
 
   @GetMapping("/code/{id}/solution")
-  public SolutionDTO getSolution(@PathVariable final String id) {
+  public SolutionDTO getSolution(@PathVariable final UUID id) {
     log.info("GET /code/{}/solution", id);
     return codeService.getSolution(id);
   }
