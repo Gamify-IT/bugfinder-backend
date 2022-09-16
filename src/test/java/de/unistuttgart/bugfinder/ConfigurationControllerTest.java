@@ -69,7 +69,7 @@ public class ConfigurationControllerTest {
   }
 
   @BeforeAll
-  @AfterAll
+  @AfterEach
   public void deleteBasicData() {
     configurationRepository.deleteAll();
   }
@@ -109,5 +109,32 @@ public class ConfigurationControllerTest {
     mvc
       .perform(get(API_URL + "/" + UUID.randomUUID()).contentType(MediaType.APPLICATION_JSON))
       .andExpect(status().isNotFound());
+  }
+
+  @Test
+  void createConfiguration() throws Exception {
+    CodeDTO newCode = new CodeDTO();
+    newCode.setWords(
+      Arrays.asList(
+        new WordDTO("public"),
+        new WordDTO(" "),
+        new WordDTO("void"),
+        new WordDTO(" "),
+        new WordDTO("sayGoodbye()"),
+        new WordDTO(" "),
+        new WordDTO("{"),
+        new WordDTO("\n"),
+        new WordDTO("}")
+      )
+    );
+    final ConfigurationDTO newConfiguration = new ConfigurationDTO();
+    newConfiguration.setCodes(List.of(newCode));
+    mvc
+      .perform(
+        post(API_URL).content(objectMapper.writeValueAsString(newConfiguration)).contentType(MediaType.APPLICATION_JSON)
+      )
+      .andExpect(status().isCreated());
+
+    assertSame(2, configurationRepository.findAll().size());
   }
 }

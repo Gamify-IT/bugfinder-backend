@@ -22,50 +22,50 @@ public class ConfigurationController extends ExceptionHandlingController {
     return configurationService.findAll();
   }
 
-  @GetMapping("/configuration/{id}")
+  @GetMapping("/configurations/{id}")
   public Optional<ConfigurationDTO> get(@PathVariable final String id) {
-    log.info("GET /configuration/{}", id);
+    log.info("GET /configurations/{}", id);
     return configurationService.find(id);
   }
 
   @ResponseStatus(HttpStatus.CREATED)
-  @PostMapping("/configuration")
+  @PostMapping("/configurations")
   public ConfigurationDTO createConfiguration(@RequestBody final ConfigurationDTO configurationDTO) {
-    log.info("POST /configuration with body {}", configurationDTO);
+    log.info("POST /configurations with body {}", configurationDTO);
     return configurationService.save(configurationDTO);
   }
 
-  @PutMapping("/configuration/{id}")
+  @PutMapping("/configurations/{id}")
   public ConfigurationDTO updateConfiguration(
     @PathVariable final String id,
     @RequestBody final ConfigurationDTO configurationDTO
   ) {
-    log.info("PUT /configuration/{} with body {}", id, configurationDTO);
+    log.info("PUT /configurations/{} with body {}", id, configurationDTO);
     return configurationService.save(configurationDTO);
   }
 
-  @DeleteMapping("/configuration/{id}")
+  @DeleteMapping("/configurations/{id}")
   public void deleteConfiguration(@PathVariable final String id) {
-    log.info("DELETE /configuration/{}", id);
+    log.info("DELETE /configurations/{}", id);
     configurationService.delete(id);
   }
 
   @ResponseStatus(HttpStatus.CREATED)
-  @PostMapping("/configuration/{id}/code")
+  @PostMapping("/configurations/{id}/code")
   public CodeDTO addCode(@PathVariable final String id, @RequestBody final CodeDTO codeDTO) {
-    log.info("POST /configuration/{}/code with body {}", id, codeDTO);
+    log.info("POST /configurations/{}/code with body {}", id, codeDTO);
     return configurationService.addCode(id, codeDTO);
   }
 
-  @DeleteMapping("/configuration/{id}/code/{codeId}")
+  @DeleteMapping("/configurations/{id}/code/{codeId}")
   public CodeDTO removeCode(@PathVariable final String id, @PathVariable final String codeId) {
-    log.info("DELETE /configuration/{}/code/{}", id, codeId);
+    log.info("DELETE /configurations/{}/code/{}", id, codeId);
     return configurationService.removeCode(id, codeId);
   }
 
-  @GetMapping("/configuration/{id}/codes")
+  @GetMapping("/configurations/{id}/codes")
   public List<CodeDTO> getCodes(@PathVariable final String id) {
-    log.info("GET /configuration/{}/codes", id);
+    log.info("GET /configurations/{}/codes", id);
     return configurationService.getCodes(id);
   }
 }

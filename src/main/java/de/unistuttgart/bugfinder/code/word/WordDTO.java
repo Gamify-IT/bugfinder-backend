@@ -14,4 +14,8 @@ public class WordDTO {
 
   String id;
   String word;
+
+  public WordDTO(final String word) {
+    this.word = word;
+  }
 }
