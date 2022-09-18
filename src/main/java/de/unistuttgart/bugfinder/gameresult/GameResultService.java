@@ -84,7 +84,7 @@ public class GameResultService {
    *
    * @param code the code where the score should be calculated
    * @param gameResultDTO the players game result
-   * @return
+   * @return a score between 0 and 100
    */
   private long calculateCodeScore(final Code code, final GameResultDTO gameResultDTO) {
     final Optional<Solution> solution = solutionRepository.findByCodeId(code.getId());
@@ -183,7 +183,7 @@ public class GameResultService {
    * Calculates the average score of a list of codes.
    *
    * @param codeScore a map with score for each code
-   * @return The average score of all code scores
+   * @return the average score of all code scores
    */
   private long calculateScoreFromCodeScores(final Map<Code, Long> codeScore) {
     long totalScore = 0;
