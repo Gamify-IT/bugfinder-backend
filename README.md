@@ -1,6 +1,6 @@
 # Bugfinder-Backend
 
-This repo serves to persist the bugfinder data in a db and to communicate with different Microservices.
+The bugfinder backend stores the data of bugfinder instances and communicates results with the overworld backend.
 
 # Development
 
@@ -10,10 +10,10 @@ Make sure you have the following installed:
 
 - Java: [JDK 1.17](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html) or higher
 - Maven: [Maven 3.6.3](https://maven.apache.org/download.cgi)
-- Docker: [Docker latest or higher](https://www.docker.com/)
+- Docker: [Docker](https://www.docker.com/)
 
-First you have to change the spring.datasource.username and the spring.datasource.password in the application.properties
-file. If you changed the properties of the postgres db, you also have to change spring.datasource.url.
+Firstly, you have to change the `spring.datasource.username` and the `spring.datasource.password` in the `application.properties` file.
+Then, if you changed the postgres URL/ port, you also have to change `spring.datasource.url`.
 
 ### Run
 
@@ -45,7 +45,7 @@ Build the Docker container with
 docker build  -t bugfinder-backend-dev .
 ```
 
-And run it at port 8000 with
+And run it on port `8000` with
 
 ```
 docker run -d -p 8000:80 -e POSTGRES_URL="postgresql://host.docker.internal:5432/postgres" -e POSTGRES_USER="postgres" -e POSTGRES_PASSWORD="postgres" --name bugfinder-backend-dev bugfinder-backend-dev
@@ -79,7 +79,7 @@ to setup a database with docker for testing you can use
 docker run -d -p 5432:5432 -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=postgres  --rm --name bugfinder-database postgres
 ```
 
-To stop and remove it simply type
+To stop and remove it, use
 
 ```sh
 docker stop bugfinder-database
