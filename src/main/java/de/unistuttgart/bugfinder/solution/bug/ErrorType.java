@@ -27,7 +27,7 @@ public enum ErrorType {
   LEXICAL,
   /**
    * Your logic is wrong. Everything compiles and runs, but it doesn't produce the result you wanted.<br>
-   * For example: {@code /* increment i */ i--; }
+   * For example: increment i: {@code i--; }
    */
   PRAGMATIC,
 }
