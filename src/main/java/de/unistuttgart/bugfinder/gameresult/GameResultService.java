@@ -69,13 +69,7 @@ public class GameResultService {
       );
     final Map<Code, Long> codeScore = new HashMap<>();
     for (final Code code : configuration.getCodes()) {
-      final Optional<Solution> solution = solutionRepository.findByCodeId(code.getId());
-      if (solution.isEmpty()) {
-        // if no solution is provided, give the player full points
-        codeScore.put(code, MAX_SCORE);
-      } else {
-        codeScore.put(code, calculateCodeScore(code, gameResultDTO));
-      }
+      codeScore.put(code, calculateCodeScore(code, gameResultDTO));
     }
     log.debug(
       "Player got score of {} in configuration with id {}",
