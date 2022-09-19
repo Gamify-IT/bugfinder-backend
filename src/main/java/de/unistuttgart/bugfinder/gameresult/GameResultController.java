@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @Slf4j
-@Import({ JWTValidatorService.class })
 public class GameResultController {
 
   @Autowired

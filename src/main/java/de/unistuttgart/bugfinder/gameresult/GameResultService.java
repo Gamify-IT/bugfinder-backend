@@ -3,6 +3,7 @@ package de.unistuttgart.bugfinder.gameresult;
 import de.unistuttgart.bugfinder.code.Code;
 import de.unistuttgart.bugfinder.configuration.Configuration;
 import de.unistuttgart.bugfinder.configuration.ConfigurationRepository;
+import de.unistuttgart.bugfinder.configuration.ConfigurationService;
 import de.unistuttgart.bugfinder.solution.Solution;
 import de.unistuttgart.bugfinder.solution.SolutionDTO;
 import de.unistuttgart.bugfinder.solution.SolutionRepository;
@@ -26,6 +27,9 @@ public class GameResultService {
   private ConfigurationRepository configurationRepository;
 
   @Autowired
+  private ConfigurationService configurationService;
+
+  @Autowired
   private SolutionRepository solutionRepository;
 
   @Autowired
@@ -42,12 +46,12 @@ public class GameResultService {
       resultClient.submit(resultDTO);
     } catch (final FeignException.BadGateway badGateway) {
       final String warning =
-        "The Overworld backend is currently not available. The result was NOT saved. Please try again later";
-      log.warn(warning + badGateway);
+        "The Overworld backend is currently not available. The result was NOT saved. Please try again later.";
+      log.warn(warning, badGateway);
       throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE, warning);
     } catch (final FeignException.NotFound notFound) {
-      final String warning = "The result could not be saved. Unknown User";
-      log.warn(warning + notFound);
+      String warning = String.format("The result could not be saved. Unknown User '%s'.", userId);
+      log.warn(warning, notFound);
       throw new ResponseStatusException(HttpStatus.NOT_FOUND, warning);
     }
   }
@@ -59,24 +63,14 @@ public class GameResultService {
    * @return a score between 0 and 100
    */
   private long calculateScore(final GameResultDTO gameResultDTO) {
-    final Configuration configuration = configurationRepository
-      .findById(gameResultDTO.getConfigurationId())
-      .orElseThrow(() ->
-        new ResponseStatusException(
-          HttpStatus.NOT_FOUND,
-          String.format("Configuration with id %s not found.", gameResultDTO.getConfigurationId())
-        )
-      );
+    final Configuration configuration = configurationService.getConfiguration(gameResultDTO.getConfigurationId());
     final Map<Code, Long> codeScore = new HashMap<>();
     for (final Code code : configuration.getCodes()) {
       codeScore.put(code, calculateCodeScore(code, gameResultDTO));
     }
-    log.debug(
-      "Player got score of {} in configuration with id {}",
-      calculateScoreFromCodeScores(codeScore),
-      configuration.getId()
-    );
-    return calculateScoreFromCodeScores(codeScore);
+    final long score = calculateScoreFromCodeScores(codeScore);
+    log.debug("Player got score of {} in configuration with ID {}", score, configuration.getId());
+    return score;
   }
 
   /**
@@ -96,31 +90,35 @@ public class GameResultService {
         gameResultDTO.getSubmittedSolutions(),
         code
       );
-      if (playerSubmittedSolution.isPresent()) {
-        int bugsSolved = 0;
-        int bugsMissolved = 0;
-        final SolutionDTO playerSolution = playerSubmittedSolution.get().getSolution();
-        for (final Bug bug : solution.get().getBugs()) {
-          if (fixedBug(bug, playerSolution)) {
-            bugsSolved++;
-          }
-        }
-        // collects all bugs where the player submitted a bug but in solution is no bug
-        final List<BugDTO> falseSubmittedBugs = getFalseSubmittedBugs(solution.get(), playerSolution);
-        bugsMissolved = falseSubmittedBugs.size();
-        long score;
-        if (solution.get().getBugs().size() == 0 && bugsMissolved == 0) {
-          score = MAX_SCORE;
-        } else {
-          score = (Math.max(bugsSolved - bugsMissolved, 0) / Math.max(solution.get().getBugs().size(), 1)) * 100;
-        }
-        log.debug("Solved {}/{} bugs", bugsSolved, solution.get().getBugs().size());
-        log.debug("Missolved {} not bugs", bugsMissolved);
-        log.debug("Reached score of {} on code wit id {}", score, code.getId());
-        return score;
+      if (playerSubmittedSolution.isEmpty()) {
+        return 0l;
       }
+      final SolutionDTO playerSolution = playerSubmittedSolution.get().getSolution();
+      final int bugsSolved = (int) solution
+        .get()
+        .getBugs()
+        .parallelStream()
+        .filter(bug -> fixedBug(bug, playerSolution))
+        .count();
+      final List<BugDTO> falseSubmittedBugs = getFalseSubmittedBugs(solution.get(), playerSolution);
+      final int bugsMissolved = falseSubmittedBugs.size();
+
+      long score;
+      if (solution.get().getBugs().isEmpty() && bugsMissolved == 0) {
+        score = MAX_SCORE;
+      } else {
+        score = (Math.max(bugsSolved - bugsMissolved, 0) / Math.max(solution.get().getBugs().size(), 1)) * MAX_SCORE;
+      }
+
+      log.debug(
+        "Solved {}/{} bugs, and falsely solved {} bugs",
+        bugsSolved,
+        solution.get().getBugs().size(),
+        bugsMissolved
+      );
+      log.debug("Reached score of {} on code with ID {}", score, code.getId());
+      return score;
     }
-    return 0l;
   }
 
   /**
@@ -130,17 +128,12 @@ public class GameResultService {
    * @param playerSolution the solution from the player
    * @return a list of bugs that are not bugs in the solution
    */
-  private List<BugDTO> getFalseSubmittedBugs(Solution solution, SolutionDTO playerSolution) {
+  private List<BugDTO> getFalseSubmittedBugs(final Solution solution, final SolutionDTO playerSolution) {
     return playerSolution
       .getBugs()
       .parallelStream()
       .filter(playerBug ->
-        solution
-          .getBugs()
-          .parallelStream()
-          .filter(bug -> bug.getWord().getId().equals(playerBug.getWordId()))
-          .count() ==
-        0
+        solution.getBugs().parallelStream().noneMatch(bug -> bug.getWord().getId().equals(playerBug.getWordId()))
       )
       .toList();
   }
@@ -153,8 +146,8 @@ public class GameResultService {
    * @return an optional of a submitted solution from the player from a specific code
    */
   private Optional<SubmittedSolutionDTO> getSubmittedSolutionFromCode(
-    List<SubmittedSolutionDTO> submittedSolutions,
-    Code code
+    final List<SubmittedSolutionDTO> submittedSolutions,
+    final Code code
   ) {
     return submittedSolutions
       .parallelStream()
@@ -191,10 +184,12 @@ public class GameResultService {
    * @return the average score of all code scores
    */
   private long calculateScoreFromCodeScores(final Map<Code, Long> codeScore) {
-    long totalScore = 0;
-    for (final long score : codeScore.values()) {
-      totalScore += score;
-    }
-    return totalScore / codeScore.size();
+    return (long) codeScore
+      .values()
+      .parallelStream()
+      .mapToLong(l -> l)
+      .filter(score -> score <= MAX_SCORE && score >= 0)
+      .average()
+      .orElse(MAX_SCORE);
   }
 }

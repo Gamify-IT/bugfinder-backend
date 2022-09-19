@@ -1,6 +1,7 @@
 package de.unistuttgart.bugfinder.solution.bug;
 
 import java.util.UUID;
+import javax.persistence.Enumerated;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,6 +24,9 @@ public class BugDTO {
   UUID id;
 
   UUID wordId;
+
+  @Enumerated
   ErrorType errorType;
+
   String correctValue;
 }

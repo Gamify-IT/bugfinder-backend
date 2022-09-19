@@ -9,7 +9,9 @@ import java.util.stream.Collectors;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+import org.springframework.web.server.ResponseStatusException;
 
 @Component
 @FieldDefaults(level = AccessLevel.PUBLIC)
@@ -36,7 +38,11 @@ public class BugMapper {
   public Bug fromDTO(final BugDTO bugDTO) {
     return new Bug(
       bugDTO.getId(),
-      wordRepository.findById(bugDTO.getWordId()).orElseThrow(),
+      wordRepository
+        .findById(bugDTO.getWordId())
+        .orElseThrow(() ->
+          new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("Word %s does not exist", bugDTO.getWordId()))
+        ),
       bugDTO.getErrorType(),
       bugDTO.getCorrectValue()
     );
