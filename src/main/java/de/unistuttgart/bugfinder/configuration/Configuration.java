@@ -10,6 +10,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
+/**
+ * A configuration contains a list of codes.
+ */
 @Entity
 @Data
 @NoArgsConstructor

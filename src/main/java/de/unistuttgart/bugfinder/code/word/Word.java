@@ -10,6 +10,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
+/**
+ * Represents a word in a code.
+ */
 @Entity
 @Data
 @NoArgsConstructor

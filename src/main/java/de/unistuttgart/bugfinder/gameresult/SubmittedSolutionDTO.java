@@ -8,6 +8,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
+/**
+ * Data Transfer Object which contains for a code the specific solution submitted by a player.
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

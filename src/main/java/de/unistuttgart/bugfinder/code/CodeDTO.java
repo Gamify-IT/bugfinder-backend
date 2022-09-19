@@ -1,5 +1,6 @@
 package de.unistuttgart.bugfinder.code;
 
+import de.unistuttgart.bugfinder.code.word.Word;
 import de.unistuttgart.bugfinder.code.word.WordDTO;
 import java.util.List;
 import java.util.UUID;
@@ -10,6 +11,11 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.lang.Nullable;
 
+/**
+ * Data Transfer Object for Code.
+ *
+ * @see Code
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

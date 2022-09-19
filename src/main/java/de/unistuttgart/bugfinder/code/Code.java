@@ -10,6 +10,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
+/**
+ * A code contains a list of words which represents a code snippet.
+ */
 @Entity
 @Data
 @NoArgsConstructor

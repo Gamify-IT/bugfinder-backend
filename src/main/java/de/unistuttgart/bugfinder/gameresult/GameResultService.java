@@ -133,9 +133,14 @@ public class GameResultService {
   private List<BugDTO> getFalseSubmittedBugs(Solution solution, SolutionDTO playerSolution) {
     return playerSolution
       .getBugs()
-      .stream()
+      .parallelStream()
       .filter(playerBug ->
-        solution.getBugs().stream().filter(bug -> bug.getWord().getId().equals(playerBug.getWordId())).count() == 0
+        solution
+          .getBugs()
+          .parallelStream()
+          .filter(bug -> bug.getWord().getId().equals(playerBug.getWordId()))
+          .count() ==
+        0
       )
       .toList();
   }
@@ -152,7 +157,7 @@ public class GameResultService {
     Code code
   ) {
     return submittedSolutions
-      .stream()
+      .parallelStream()
       .filter(submittedSolution -> submittedSolution.getCodeId().equals(code.getId()))
       .findAny();
   }
@@ -167,7 +172,7 @@ public class GameResultService {
   private boolean fixedBug(final Bug bug, final SolutionDTO playersSolution) {
     final Optional<BugDTO> playersBug = playersSolution
       .getBugs()
-      .stream()
+      .parallelStream()
       .filter(toFindPlayerBug -> toFindPlayerBug.getWordId().equals(bug.getWord().getId()))
       .findAny();
     if (playersBug.isEmpty()) {
@@ -187,7 +192,7 @@ public class GameResultService {
    */
   private long calculateScoreFromCodeScores(final Map<Code, Long> codeScore) {
     long totalScore = 0;
-    for (long score : codeScore.values()) {
+    for (final long score : codeScore.values()) {
       totalScore += score;
     }
     return totalScore / codeScore.size();

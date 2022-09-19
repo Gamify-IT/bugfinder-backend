@@ -26,11 +26,11 @@ public class BugMapper {
   }
 
   public List<BugDTO> toDTO(final Collection<Bug> bugs) {
-    return bugs.stream().map(this::toDTO).collect(Collectors.toList());
+    return bugs.parallelStream().map(this::toDTO).collect(Collectors.toList());
   }
 
   public Optional<BugDTO> toDTO(final Optional<Bug> bug) {
-    return bug.isEmpty() ? Optional.empty() : Optional.of(toDTO(bug.get()));
+    return bug.map(this::toDTO);
   }
 
   public Bug fromDTO(final BugDTO bugDTO) {
@@ -43,10 +43,10 @@ public class BugMapper {
   }
 
   public List<Bug> fromDTO(final Collection<BugDTO> bugDTOs) {
-    return bugDTOs.stream().map(this::fromDTO).collect(Collectors.toList());
+    return bugDTOs.parallelStream().map(this::fromDTO).collect(Collectors.toList());
   }
 
   public Optional<Bug> fromDTO(final Optional<BugDTO> bugDTO) {
-    return bugDTO.isEmpty() ? Optional.empty() : Optional.of(fromDTO(bugDTO.get()));
+    return bugDTO.map(this::fromDTO);
   }
 }

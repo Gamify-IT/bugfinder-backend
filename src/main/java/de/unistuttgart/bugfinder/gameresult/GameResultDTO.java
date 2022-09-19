@@ -8,6 +8,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
+/**
+ * Data Transfer Object to send game results of a player's game run of a configuration.
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -15,5 +18,8 @@ import lombok.experimental.FieldDefaults;
 public class GameResultDTO {
 
   UUID configurationId;
+  /**
+   * Each submitted solution contains the solution of one code.
+   */
   List<SubmittedSolutionDTO> submittedSolutions;
 }

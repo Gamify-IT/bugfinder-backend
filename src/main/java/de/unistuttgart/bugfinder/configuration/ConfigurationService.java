@@ -19,9 +19,6 @@ import org.springframework.web.server.ResponseStatusException;
 public class ConfigurationService {
 
   @Autowired
-  private CodeService codeService;
-
-  @Autowired
   private ConfigurationRepository configurationRepository;
 
   @Autowired
@@ -35,9 +32,14 @@ public class ConfigurationService {
     return configurationMapper.toDTO(configurationRepository.findAll());
   }
 
-  public Optional<ConfigurationDTO> find(final UUID id) {
+  public ConfigurationDTO find(final UUID id) {
     log.info("get configuration {}", id);
-    return configurationMapper.toDTO(configurationRepository.findById(id));
+    Configuration configuration = configurationRepository
+      .findById(id)
+      .orElseThrow(() ->
+        new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("Configuration with id %s not found.", id))
+      );
+    return configurationMapper.toDTO(configuration);
   }
 
   public ConfigurationDTO save(final ConfigurationDTO configurationDTO) {
@@ -56,34 +58,12 @@ public class ConfigurationService {
     return configurationMapper.toDTO(configuration);
   }
 
-  public CodeDTO addCode(final UUID id, final CodeDTO code) {
-    log.info("add code {} to configuration {}", code, id);
-    final Configuration configuration = configurationRepository
-      .findById(id)
-      .orElseThrow(() ->
-        new ResponseStatusException(NOT_FOUND, String.format("Unable to find configuration with id %s", id))
-      );
-    final CodeDTO savedCode = codeService.save(code);
-    configuration.addCode(codeMapper.fromDTO(savedCode));
-    configurationRepository.save(configuration);
-    return savedCode;
-  }
-
-  public CodeDTO removeCode(final UUID id, final UUID codeId) {
-    log.info("remove code {} from configuration {}", codeId, id);
-    final Configuration configuration = configurationRepository
-      .findById(id)
-      .orElseThrow(() ->
-        new ResponseStatusException(NOT_FOUND, String.format("Unable to find configuration with id %s", id))
-      );
-    final CodeDTO persistedCode = codeService
-      .find(codeId)
-      .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, String.format("Unable to find code with id %s", id)));
-    configuration.removeCode(codeMapper.fromDTO(persistedCode));
-    configurationRepository.save(configuration);
-    return null;
-  }
-
+  /**
+   * Get all codes of a configuration.
+   *
+   * @param id the configuration id
+   * @return the codes of the specified configuration
+   */
   public List<CodeDTO> getCodes(final UUID id) {
     log.info("get codes from configuration {}", id);
     final Configuration configuration = configurationRepository

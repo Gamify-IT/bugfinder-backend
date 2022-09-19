@@ -22,11 +22,11 @@ public class CodeMapper {
   }
 
   public List<CodeDTO> toDTO(final Collection<Code> codes) {
-    return codes.stream().map(this::toDTO).collect(Collectors.toList());
+    return codes.parallelStream().map(this::toDTO).collect(Collectors.toList());
   }
 
   public Optional<CodeDTO> toDTO(final Optional<Code> code) {
-    return code.isEmpty() ? Optional.empty() : Optional.of(toDTO(code.get()));
+    return code.map(this::toDTO);
   }
 
   public Code fromDTO(final CodeDTO codeDTO) {
@@ -34,10 +34,10 @@ public class CodeMapper {
   }
 
   public List<Code> fromDTO(final Collection<CodeDTO> codeDTOs) {
-    return codeDTOs.stream().map(this::fromDTO).collect(Collectors.toList());
+    return codeDTOs.parallelStream().map(this::fromDTO).collect(Collectors.toList());
   }
 
   public Optional<Code> fromDTO(final Optional<CodeDTO> codeDTO) {
-    return codeDTO.isEmpty() ? Optional.empty() : Optional.of(fromDTO(codeDTO.get()));
+    return codeDTO.map(this::fromDTO);
   }
 }

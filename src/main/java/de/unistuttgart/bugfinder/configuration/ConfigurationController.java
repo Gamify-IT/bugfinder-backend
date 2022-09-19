@@ -1,7 +1,5 @@
 package de.unistuttgart.bugfinder.configuration;
 
-import de.unistuttgart.bugfinder.ExceptionHandlingController;
-import de.unistuttgart.bugfinder.code.CodeDTO;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -12,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @Slf4j
-public class ConfigurationController extends ExceptionHandlingController {
+public class ConfigurationController {
 
   @Autowired
   private ConfigurationService configurationService;
@@ -24,7 +22,7 @@ public class ConfigurationController extends ExceptionHandlingController {
   }
 
   @GetMapping("/configurations/{id}")
-  public Optional<ConfigurationDTO> get(@PathVariable final UUID id) {
+  public ConfigurationDTO get(@PathVariable final UUID id) {
     log.info("GET /configurations/{}", id);
     return configurationService.find(id);
   }
@@ -49,24 +47,5 @@ public class ConfigurationController extends ExceptionHandlingController {
   public ConfigurationDTO deleteConfiguration(@PathVariable final UUID id) {
     log.info("DELETE /configurations/{}", id);
     return configurationService.delete(id);
-  }
-
-  @ResponseStatus(HttpStatus.CREATED)
-  @PostMapping("/configurations/{id}/codes")
-  public CodeDTO addCode(@PathVariable final UUID id, @RequestBody final CodeDTO codeDTO) {
-    log.info("POST /configurations/{}/codes with body {}", id, codeDTO);
-    return configurationService.addCode(id, codeDTO);
-  }
-
-  @DeleteMapping("/configurations/{id}/codes/{codeId}")
-  public CodeDTO removeCode(@PathVariable final UUID id, @PathVariable final UUID codeId) {
-    log.info("DELETE /configurations/{}/codes/{}", id, codeId);
-    return configurationService.removeCode(id, codeId);
-  }
-
-  @GetMapping("/configurations/{id}/codes")
-  public List<CodeDTO> getCodes(@PathVariable final UUID id) {
-    log.info("GET /configurations/{}/codes", id);
-    return configurationService.getCodes(id);
   }
 }

@@ -27,11 +27,11 @@ public class SolutionMapper {
   }
 
   public List<SolutionDTO> toDTO(final Collection<Solution> solutions) {
-    return solutions.stream().map(this::toDTO).collect(Collectors.toList());
+    return solutions.parallelStream().map(this::toDTO).collect(Collectors.toList());
   }
 
   public Optional<SolutionDTO> toDTO(final Optional<Solution> solution) {
-    return solution.isEmpty() ? Optional.empty() : Optional.of(toDTO(solution.get()));
+    return solution.map(this::toDTO);
   }
 
   public Solution fromDTO(final SolutionDTO solutionDTO) {
@@ -43,10 +43,10 @@ public class SolutionMapper {
   }
 
   public List<Solution> fromDTO(final Collection<SolutionDTO> solutionDTOs) {
-    return solutionDTOs.stream().map(this::fromDTO).collect(Collectors.toList());
+    return solutionDTOs.parallelStream().map(this::fromDTO).collect(Collectors.toList());
   }
 
   public Optional<Solution> fromDTO(final Optional<SolutionDTO> solutionDTO) {
-    return solutionDTO.isEmpty() ? Optional.empty() : Optional.of(fromDTO(solutionDTO.get()));
+    return solutionDTO.map(this::fromDTO);
   }
 }

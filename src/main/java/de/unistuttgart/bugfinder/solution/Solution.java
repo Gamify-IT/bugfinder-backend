@@ -11,6 +11,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
+/**
+ * Contains a list of bugs which represents the solution.
+ *
+ * A solution is linked to a specific code.
+ */
 @Entity
 @Data
 @NoArgsConstructor

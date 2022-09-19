@@ -9,6 +9,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
+/**
+ * A Bug is an error in a word of a code.
+ *
+ * A list of bugs represent a solution.
+ */
 @Entity
 @Data
 @NoArgsConstructor
@@ -20,9 +25,10 @@ public class Bug {
   @GeneratedValue(generator = "uuid")
   UUID id;
 
-  @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+  @OneToOne
   Word word;
 
+  @Enumerated
   ErrorType errorType;
 
   String correctValue;

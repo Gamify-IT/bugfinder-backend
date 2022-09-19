@@ -13,11 +13,11 @@ public class WordMapper {
   }
 
   public List<WordDTO> toDTO(final List<Word> words) {
-    return words.stream().map(this::toDTO).collect(Collectors.toList());
+    return words.parallelStream().map(this::toDTO).collect(Collectors.toList());
   }
 
   public Optional<WordDTO> toDTO(final Optional<Word> word) {
-    return word.isEmpty() ? Optional.empty() : Optional.of(toDTO(word.get()));
+    return word.map(this::toDTO);
   }
 
   public Word fromDTO(final WordDTO wordDTO) {
@@ -25,10 +25,10 @@ public class WordMapper {
   }
 
   public List<Word> fromDTO(final List<WordDTO> wordDTOs) {
-    return wordDTOs.stream().map(this::fromDTO).collect(Collectors.toList());
+    return wordDTOs.parallelStream().map(this::fromDTO).collect(Collectors.toList());
   }
 
   public Optional<Word> fromDTO(final Optional<WordDTO> wordDTO) {
-    return wordDTO.isEmpty() ? Optional.empty() : Optional.of(fromDTO(wordDTO.get()));
+    return wordDTO.map(this::fromDTO);
   }
 }
