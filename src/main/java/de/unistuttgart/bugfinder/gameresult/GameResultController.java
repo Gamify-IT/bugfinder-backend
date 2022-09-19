@@ -3,11 +3,13 @@ package de.unistuttgart.bugfinder.gameresult;
 import de.unistuttgart.gamifyit.authentificationvalidator.JWTValidatorService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @Slf4j
+@Import({ JWTValidatorService.class })
 public class GameResultController {
 
   @Autowired
@@ -22,7 +24,8 @@ public class GameResultController {
     @CookieValue("access_token") final String accessToken,
     @RequestBody final GameResultDTO gameResultDTO
   ) {
-    final String userId = jwtValidatorService.validate(accessToken).getSubject();
+    jwtValidatorService.validateTokenOrThrow(accessToken);
+    final String userId = jwtValidatorService.extractUserId(accessToken);
     log.debug("save game result for userId {}: {}", userId, gameResultDTO);
     gameResultService.saveGameResult(gameResultDTO, userId);
     return gameResultDTO;
