@@ -11,6 +11,7 @@ import de.unistuttgart.bugfinder.solution.bug.Bug;
 import de.unistuttgart.bugfinder.solution.bug.BugDTO;
 import feign.FeignException;
 import java.util.*;
+import java.util.function.Predicate;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -37,7 +38,6 @@ public class GameResultService {
 
   public void saveGameResult(final GameResultDTO gameResultDTO, final String userId) {
     final OverworldResultDTO resultDTO = new OverworldResultDTO(
-      "BUGFINDER",
       gameResultDTO.getConfigurationId(),
       calculateScore(gameResultDTO),
       userId
@@ -156,25 +156,21 @@ public class GameResultService {
   }
 
   /**
-   * Calculate if a bug was fixed or not
+   * Calculate if a bug was fixed or not.
+   *
+   * The bug is fixed if the player submitted the required word as bug, selected the right error type and corrected the bug.
    *
    * @param bug The bug with correct values
    * @param playersSolution the players solution
    * @return whether the bug was fixed or not
    */
   private boolean fixedBug(final Bug bug, final SolutionDTO playersSolution) {
-    final Optional<BugDTO> playersBug = playersSolution
+    return playersSolution
       .getBugs()
       .parallelStream()
-      .filter(toFindPlayerBug -> toFindPlayerBug.getWordId().equals(bug.getWord().getId()))
-      .findAny();
-    if (playersBug.isEmpty()) {
-      return false;
-    }
-    return (
-      playersBug.get().getErrorType() == bug.getErrorType() &&
-      playersBug.get().getCorrectValue().equals(bug.getCorrectValue())
-    );
+      .filter(playerBug -> Objects.equals(playerBug.getWordId(), bug.getWord().getId()))
+      .filter(playerBug -> playerBug.getErrorType() == bug.getErrorType())
+      .anyMatch(playerBug -> Objects.equals(playerBug.getCorrectValue(), bug.getCorrectValue()));
   }
 
   /**

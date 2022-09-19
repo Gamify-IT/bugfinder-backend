@@ -20,9 +20,7 @@ Then, if you changed the postgres URL/ port, you also have to change `spring.dat
 #### Docker-compose
 
 Start all dependencies with our docker-compose files.
-Check
-the [manual for starting the dependencies with docker-compose](https://github.com/Gamify-IT/docs/blob/main/dev-manuals/docker-compose/docker-compose.md)
-.
+Check the [manual for starting the dependencies with docker-compose](https://github.com/Gamify-IT/docs/blob/main/dev-manuals/languages/docker/docker-compose.md).
 
 #### Project build
 
