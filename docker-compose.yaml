@@ -68,7 +68,19 @@ services:
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_URL=postgresql://overworld-db:5432/postgres
 
-  ## TODO: insert bugfinder backend when ready
+  bugfinder-backend:
+    container_name: bugfinder-backend
+    image: ghcr.io/gamify-it/bugfinder-backend:main
+    restart: always
+    pull_policy: always
+    expose:
+      - "80"
+    depends_on:
+      - bugfinder-db
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_URL=postgresql://bugfinder-db:5432/postgres
 
   #frontends
   landing-page:

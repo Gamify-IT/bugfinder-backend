@@ -17,20 +17,20 @@ public class ConfigurationController {
 
   @GetMapping("/configurations")
   public List<ConfigurationDTO> getAll() {
-    log.info("GET /configurations");
+    log.debug("GET /configurations");
     return configurationService.findAll();
   }
 
   @GetMapping("/configurations/{id}")
   public ConfigurationDTO get(@PathVariable final UUID id) {
-    log.info("GET /configurations/{}", id);
+    log.debug("GET /configurations/{}", id);
     return configurationService.find(id);
   }
 
   @ResponseStatus(HttpStatus.CREATED)
   @PostMapping("/configurations")
   public ConfigurationDTO createConfiguration(@RequestBody final ConfigurationDTO configurationDTO) {
-    log.info("POST /configurations with body {}", configurationDTO);
+    log.debug("POST /configurations with body {}", configurationDTO);
     return configurationService.save(configurationDTO);
   }
 
@@ -39,13 +39,13 @@ public class ConfigurationController {
     @PathVariable final UUID id,
     @RequestBody final ConfigurationDTO configurationDTO
   ) {
-    log.info("PUT /configurations/{} with body {}", id, configurationDTO);
+    log.debug("PUT /configurations/{} with body {}", id, configurationDTO);
     return configurationService.save(configurationDTO);
   }
 
   @DeleteMapping("/configurations/{id}")
   public ConfigurationDTO deleteConfiguration(@PathVariable final UUID id) {
-    log.info("DELETE /configurations/{}", id);
+    log.debug("DELETE /configurations/{}", id);
     return configurationService.delete(id);
   }
 }

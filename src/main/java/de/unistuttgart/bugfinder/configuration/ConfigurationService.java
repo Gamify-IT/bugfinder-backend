@@ -28,12 +28,12 @@ public class ConfigurationService {
   private CodeMapper codeMapper;
 
   public List<ConfigurationDTO> findAll() {
-    log.info("get all configurations");
+    log.debug("get all configurations");
     return configurationMapper.toDTO(configurationRepository.findAll());
   }
 
   public ConfigurationDTO find(final UUID id) {
-    log.info("get configuration {}", id);
+    log.debug("get configuration {}", id);
     Configuration configuration = configurationRepository
       .findById(id)
       .orElseThrow(() ->
@@ -43,12 +43,12 @@ public class ConfigurationService {
   }
 
   public ConfigurationDTO save(final ConfigurationDTO configurationDTO) {
-    log.info("create configuration {}", configurationDTO);
+    log.debug("create configuration {}", configurationDTO);
     return configurationMapper.toDTO(configurationRepository.save(configurationMapper.fromDTO(configurationDTO)));
   }
 
   public ConfigurationDTO delete(final UUID id) {
-    log.info("delete configuration {}", id);
+    log.debug("delete configuration {}", id);
     Configuration configuration = configurationRepository
       .findById(id)
       .orElseThrow(() ->
@@ -65,7 +65,7 @@ public class ConfigurationService {
    * @return the codes of the specified configuration
    */
   public List<CodeDTO> getCodes(final UUID id) {
-    log.info("get codes from configuration {}", id);
+    log.debug("get codes from configuration {}", id);
     final Configuration configuration = configurationRepository
       .findById(id)
       .orElseThrow(() ->

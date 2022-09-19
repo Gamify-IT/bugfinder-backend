@@ -21,13 +21,13 @@ public class CodeController {
 
   @GetMapping("/codes")
   public List<CodeDTO> getAll(@PathVariable final UUID configurationId) {
-    log.info("GET /configurations/{}/codes", configurationId);
+    log.debug("GET /configurations/{}/codes", configurationId);
     return configurationService.getCodes(configurationId);
   }
 
   @GetMapping("/codes/{codeId}/solutions")
   public SolutionDTO getSolution(@PathVariable final UUID configurationId, @PathVariable final UUID codeId) {
-    log.info("GET /configurations/{}/codes/{}/solutions", configurationId, codeId);
+    log.debug("GET /configurations/{}/codes/{}/solutions", configurationId, codeId);
     return codeService.getSolution(codeId);
   }
 }

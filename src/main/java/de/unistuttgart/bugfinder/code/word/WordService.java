@@ -18,22 +18,22 @@ public class WordService {
   private WordMapper wordMapper;
 
   public List<WordDTO> findAll() {
-    log.info("get all words");
+    log.debug("get all words");
     return wordMapper.toDTO(wordRepository.findAll());
   }
 
   public Optional<WordDTO> find(final UUID id) {
-    log.info("get word {}", id);
+    log.debug("get word {}", id);
     return wordMapper.toDTO(wordRepository.findById(id));
   }
 
   public WordDTO save(final WordDTO wordDTO) {
-    log.info("create word {}", wordDTO);
+    log.debug("create word {}", wordDTO);
     return wordMapper.toDTO(wordRepository.save(wordMapper.fromDTO(wordDTO)));
   }
 
   public void delete(final UUID id) {
-    log.info("delete word {}", id);
+    log.debug("delete word {}", id);
     wordRepository.deleteById(id);
   }
 }

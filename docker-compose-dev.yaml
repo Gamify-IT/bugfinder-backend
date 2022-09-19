@@ -85,13 +85,13 @@ services:
     expose:
       - "80"
 
-  # bugfinder:
-  #   container_name: bugfinder
-  #   image: ghcr.io/gamify-it/bugfinder:main
-  #   restart: always
-  #   pull_policy: always
-  #   expose:
-  #     - "80"
+  bugfinder:
+    container_name: bugfinder
+    image: ghcr.io/gamify-it/bugfinder:main
+    restart: always
+    pull_policy: always
+    expose:
+      - "80"
 
   lecturer-interface:
     container_name: lecturer-interface
