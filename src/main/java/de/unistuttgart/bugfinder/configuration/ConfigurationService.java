@@ -1,13 +1,19 @@
 package de.unistuttgart.bugfinder.configuration;
 
-import static org.springframework.http.HttpStatus.NOT_FOUND;
-
+import de.unistuttgart.bugfinder.code.Code;
 import de.unistuttgart.bugfinder.code.CodeDTO;
 import de.unistuttgart.bugfinder.code.CodeMapper;
-import de.unistuttgart.bugfinder.code.CodeService;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import de.unistuttgart.bugfinder.code.CodeRepository;
+import de.unistuttgart.bugfinder.code.word.Word;
+import de.unistuttgart.bugfinder.code.word.WordRepository;
+import de.unistuttgart.bugfinder.configuration.vm.CodeVM;
+import de.unistuttgart.bugfinder.configuration.vm.ConfigurationVM;
+import de.unistuttgart.bugfinder.configuration.vm.WordVM;
+import de.unistuttgart.bugfinder.solution.Solution;
+import de.unistuttgart.bugfinder.solution.SolutionRepository;
+import de.unistuttgart.bugfinder.solution.bug.Bug;
+import de.unistuttgart.bugfinder.solution.bug.BugRepository;
+import java.util.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,11 +33,24 @@ public class ConfigurationService {
   @Autowired
   private CodeMapper codeMapper;
 
+  @Autowired
+  private CodeRepository codeRepository;
+
+  @Autowired
+  private SolutionRepository solutionRepository;
+
+  @Autowired
+  private WordRepository wordRepository;
+
+  @Autowired
+  private BugRepository bugRepository;
+
   /**
    * Get a configuration by its id.
+   *
    * @param id the id of the configuration
-   * @throws ResponseStatusException (404) when configuration with its id does not exist
    * @return the found configuration
+   * @throws ResponseStatusException (404) when configuration with its id does not exist
    */
   public Configuration getConfiguration(final UUID id) {
     return configurationRepository
@@ -51,9 +70,10 @@ public class ConfigurationService {
 
   /**
    * Get the configuration by its id as DTO.
+   *
    * @param id the id of the configuration
-   * @throws ResponseStatusException (404) when configuration with its id does not exist
    * @return the found configuration as DTO
+   * @throws ResponseStatusException (404) when configuration with its id does not exist
    */
   public ConfigurationDTO find(final UUID id) {
     log.debug("get configuration {}", id);
@@ -70,6 +90,53 @@ public class ConfigurationService {
   public ConfigurationDTO save(final ConfigurationDTO configurationDTO) {
     log.debug("create configuration {}", configurationDTO);
     return configurationMapper.toDTO(configurationRepository.save(configurationMapper.fromDTO(configurationDTO)));
+  }
+
+  public ConfigurationDTO build(final ConfigurationVM configurationVM) {
+    Set<Code> codesToPersist = new HashSet<>(configurationVM.getCodes().size());
+    for (CodeVM codeVM : configurationVM.getCodes()) {
+      List<Word> wordsToPersistToCode = new ArrayList<>(codeVM.getWords().size());
+      Set<Bug> bugsToPersistToSolution = new HashSet<>();
+      bugsToPersistToSolution = new HashSet<>();
+      for (List<WordVM> row : codeVM.getWords()) {
+        // check if the row only contains blank strings
+        // the first row will never contain only blank strings since it comes from the lecture interface
+        if (row.stream().allMatch(wordVM -> wordVM.getCorrectValue().isBlank())) {
+          continue;
+        }
+        // if it is not the first row in the code we add a new line
+        if (codeVM.getWords().indexOf(row) != 0) {
+          wordsToPersistToCode.add(wordRepository.save(new Word(null, "\n")));
+        }
+        for (WordVM wordVM : row) {
+          // check if the word is blank
+          // the first word will never be blank since it comes from the lecture interface
+          if (wordVM.getCorrectValue().isBlank()) {
+            continue;
+          }
+          // if it is not the first word in the row we add a space
+          if (row.indexOf(wordVM) != 0) {
+            wordsToPersistToCode.add(wordRepository.save(new Word(null, " ")));
+          }
+          String displayValue = wordVM.getDisplayValue() != null ? wordVM.getDisplayValue() : wordVM.getCorrectValue();
+          Word word = new Word(null, displayValue);
+          word = wordRepository.save(word);
+          wordsToPersistToCode.add(word);
+          if (wordVM.getErrorType() != null) {
+            Bug bug = new Bug(word, wordVM.getErrorType(), wordVM.getCorrectValue());
+            bugsToPersistToSolution.add(bug);
+            bug = bugRepository.save(bug);
+          }
+        }
+      }
+      Code code = new Code(null, wordsToPersistToCode);
+      codesToPersist.add(code);
+      Solution solution = new Solution(null, bugsToPersistToSolution, code);
+      code = codeRepository.save(code);
+      solution = solutionRepository.save(solution);
+    }
+    Configuration configuration = new Configuration(null, codesToPersist);
+    return configurationMapper.toDTO(configurationRepository.save(configuration));
   }
 
   /**
