@@ -13,7 +13,7 @@ import lombok.experimental.FieldDefaults;
 
 /**
  * Contains a list of bugs which represents the solution.
- *
+ * <p>
  * A solution is linked to a specific code.
  */
 @Entity
@@ -30,7 +30,7 @@ public class Solution {
   @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
   Set<Bug> bugs;
 
-  @OneToOne
+  @OneToOne(cascade = CascadeType.ALL)
   Code code;
 
   public Solution(final Set<Bug> bugs) {
