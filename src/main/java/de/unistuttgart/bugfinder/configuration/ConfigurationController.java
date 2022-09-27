@@ -27,6 +27,12 @@ public class ConfigurationController {
     return configurationService.find(id);
   }
 
+  @GetMapping("/configurations/vm/{id}")
+  public ConfigurationVM getVM(@PathVariable final UUID id) {
+    log.debug("GET /configurations/{}", id);
+    return configurationService.getViewModel(id);
+  }
+
   @ResponseStatus(HttpStatus.CREATED)
   @PostMapping("/configurations")
   public ConfigurationDTO createConfiguration(@RequestBody final ConfigurationDTO configurationDTO) {

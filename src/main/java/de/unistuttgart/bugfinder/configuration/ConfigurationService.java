@@ -166,4 +166,51 @@ public class ConfigurationService {
     final Configuration configuration = getConfiguration(id);
     return codeMapper.toDTO(configuration.getCodes());
   }
+
+  public ConfigurationVM getViewModel(UUID id) {
+    log.debug("get configuration view model {}", id);
+    final Configuration configuration = getConfiguration(id);
+    final ConfigurationVM configurationVM = new ConfigurationVM(new ArrayList<>());
+    for (Code code : configuration.getCodes()) {
+      final CodeVM codeVM = new CodeVM(new ArrayList<>());
+      final Solution solution = solutionRepository
+        .findByCodeId(code.getId())
+        .orElseThrow(() ->
+          new ResponseStatusException(
+            HttpStatus.NOT_FOUND,
+            String.format("Solution with code id %s not found.", code.getId())
+          )
+        );
+
+      List<WordVM> row = new ArrayList<>();
+      for (Word word : code.getWords()) {
+        if (word.getWord().equals(" ")) {
+          continue;
+        }
+        if (word.getWord().equals("\n")) {
+          codeVM.getWords().add(row);
+          row = new ArrayList<>();
+          continue;
+        }
+        Optional<Bug> bug = solution
+          .getBugs()
+          .stream()
+          .filter(b -> b.getWord().getId().equals(word.getId()))
+          .findFirst();
+        final WordVM wordVM = new WordVM();
+        if (bug.isPresent()) {
+          wordVM.setErrorType(bug.get().getErrorType());
+          wordVM.setCorrectValue(bug.get().getCorrectValue());
+          wordVM.setDisplayValue(word.getWord());
+        } else {
+          wordVM.setCorrectValue(word.getWord());
+        }
+        row.add(wordVM);
+      }
+      codeVM.getWords().add(row);
+      configurationVM.getCodes().add(codeVM);
+    }
+
+    return configurationVM;
+  }
 }
