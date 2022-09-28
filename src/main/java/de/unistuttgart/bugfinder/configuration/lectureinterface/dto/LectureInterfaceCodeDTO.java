@@ -1,4 +1,4 @@
-package de.unistuttgart.bugfinder.configuration.vm;
+package de.unistuttgart.bugfinder.configuration.lectureinterface.dto;
 
 import java.util.List;
 import lombok.AccessLevel;
@@ -7,14 +7,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
-/**
- * describes the view model of the lecture interface and is used to build configurations
- */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class ConfigurationVM {
+public class LectureInterfaceCodeDTO {
 
-  List<CodeVM> codes;
+  List<List<LectureInterfaceWordDTO>> words;
 }

@@ -1,6 +1,7 @@
 package de.unistuttgart.bugfinder.configuration;
 
-import de.unistuttgart.bugfinder.configuration.vm.ConfigurationVM;
+import de.unistuttgart.bugfinder.configuration.lectureinterface.LectureInterfaceService;
+import de.unistuttgart.bugfinder.configuration.lectureinterface.dto.LectureInterfaceConfigurationDTO;
 import java.util.List;
 import java.util.UUID;
 import lombok.extern.slf4j.Slf4j;
@@ -15,6 +16,9 @@ public class ConfigurationController {
   @Autowired
   private ConfigurationService configurationService;
 
+  @Autowired
+  private LectureInterfaceService getLectureInterfaceModel;
+
   @GetMapping("/configurations")
   public List<ConfigurationDTO> getAll() {
     log.debug("GET /configurations");
@@ -28,9 +32,9 @@ public class ConfigurationController {
   }
 
   @GetMapping("/configurations/vm/{id}")
-  public ConfigurationVM getVM(@PathVariable final UUID id) {
+  public LectureInterfaceConfigurationDTO getVM(@PathVariable final UUID id) {
     log.debug("GET /configurations/{}", id);
-    return configurationService.getViewModel(id);
+    return getLectureInterfaceModel.get(id);
   }
 
   @ResponseStatus(HttpStatus.CREATED)
@@ -48,9 +52,9 @@ public class ConfigurationController {
    */
   @ResponseStatus(HttpStatus.CREATED)
   @PostMapping("/configurations/build")
-  public ConfigurationDTO buildConfiguration(@RequestBody final ConfigurationVM configurationBuilderCodeDTO) {
+  public ConfigurationDTO buildConfiguration(@RequestBody final LectureInterfaceConfigurationDTO configurationBuilderCodeDTO) {
     log.debug("POST /configurations/builder with body {}", configurationBuilderCodeDTO);
-    return configurationService.build(configurationBuilderCodeDTO);
+    return getLectureInterfaceModel.save(configurationBuilderCodeDTO);
   }
 
   @PutMapping("/configurations/{id}")
