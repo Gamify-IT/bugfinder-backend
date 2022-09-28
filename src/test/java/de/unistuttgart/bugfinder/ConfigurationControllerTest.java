@@ -78,7 +78,7 @@ public class ConfigurationControllerTest {
   @BeforeAll
   @AfterEach
   public void deleteBasicData() {
-//        configurationRepository.deleteAll();
+        configurationRepository.deleteAll();
   }
 
   @Test
