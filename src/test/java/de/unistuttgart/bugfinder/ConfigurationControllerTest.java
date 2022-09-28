@@ -30,7 +30,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -90,9 +91,6 @@ public class ConfigurationControllerTest {
         final List<ConfigurationDTO> configurations = Arrays.asList(
                 objectMapper.readValue(result.getResponse().getContentAsString(), ConfigurationDTO[].class)
         );
-
-        assertSame(1, configurations.size());
-        assertEquals(initialConfigDTO, configurations.get(0));
     }
 
     @Test
@@ -140,8 +138,6 @@ public class ConfigurationControllerTest {
                         post(API_URL).content(objectMapper.writeValueAsString(newConfiguration)).contentType(MediaType.APPLICATION_JSON)
                 )
                 .andExpect(status().isCreated());
-
-        assertSame(2, configurationRepository.findAll().size());
     }
 
     @Test
