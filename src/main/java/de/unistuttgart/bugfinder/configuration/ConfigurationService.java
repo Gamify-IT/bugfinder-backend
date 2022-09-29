@@ -6,9 +6,9 @@ import de.unistuttgart.bugfinder.code.CodeMapper;
 import de.unistuttgart.bugfinder.code.CodeRepository;
 import de.unistuttgart.bugfinder.code.word.Word;
 import de.unistuttgart.bugfinder.code.word.WordRepository;
-import de.unistuttgart.bugfinder.configuration.lectureinterface.dto.LectureInterfaceCodeDTO;
-import de.unistuttgart.bugfinder.configuration.lectureinterface.dto.LectureInterfaceConfigurationDTO;
-import de.unistuttgart.bugfinder.configuration.lectureinterface.dto.LectureInterfaceWordDTO;
+import de.unistuttgart.bugfinder.configuration.vm.CodeVM;
+import de.unistuttgart.bugfinder.configuration.vm.ConfigurationVM;
+import de.unistuttgart.bugfinder.configuration.vm.WordVM;
 import de.unistuttgart.bugfinder.solution.Solution;
 import de.unistuttgart.bugfinder.solution.SolutionRepository;
 import de.unistuttgart.bugfinder.solution.bug.Bug;
@@ -93,6 +93,53 @@ public class ConfigurationService {
         return configurationMapper.toDTO(configurationRepository.save(configurationMapper.fromDTO(configurationDTO)));
     }
 
+    public ConfigurationDTO build(final ConfigurationVM configurationVM) {
+        Set<Code> codesToPersist = new HashSet<>(configurationVM.getCodes().size());
+        for (CodeVM codeVM : configurationVM.getCodes()) {
+            List<Word> wordsToPersistToCode = new ArrayList<>(codeVM.getWords().size());
+            Set<Bug> bugsToPersistToSolution = new HashSet<>();
+            bugsToPersistToSolution = new HashSet<>();
+            for (List<WordVM> row : codeVM.getWords()) {
+                // check if the row only contains blank strings
+                // the first row will never contain only blank strings since it comes from the lecture interface
+                if (row.stream().allMatch(wordVM -> wordVM.getCorrectValue().isBlank())) {
+                    continue;
+                }
+                // if it is not the first row in the code we add a new line
+                if (codeVM.getWords().indexOf(row) != 0) {
+                    wordsToPersistToCode.add(wordRepository.save(new Word(null, "\n")));
+                }
+                for (WordVM wordVM : row) {
+                    // check if the word is blank
+                    // the first word will never be blank since it comes from the lecture interface
+                    if (wordVM.getCorrectValue().isBlank()) {
+                        continue;
+                    }
+                    // if it is not the first word in the row we add a space
+                    if (row.indexOf(wordVM) != 0) {
+                        wordsToPersistToCode.add(wordRepository.save(new Word(null, " ")));
+                    }
+                    String displayValue = wordVM.getDisplayValue() != null ? wordVM.getDisplayValue() : wordVM.getCorrectValue();
+                    Word word = new Word(null, displayValue);
+                    word = wordRepository.save(word);
+                    wordsToPersistToCode.add(word);
+                    if (wordVM.getErrorType() != null) {
+                        Bug bug = new Bug(word, wordVM.getErrorType(), wordVM.getCorrectValue());
+                        bug = bugRepository.save(bug);
+                        bugsToPersistToSolution.add(bug);
+                    }
+                }
+            }
+            Code code = new Code(null, wordsToPersistToCode);
+            codesToPersist.add(code);
+            Solution solution = new Solution(null, bugsToPersistToSolution, code);
+            code = codeRepository.save(code);
+            solution = solutionRepository.save(solution);
+        }
+        Configuration configuration = new Configuration(null, codesToPersist);
+        return configurationMapper.toDTO(configurationRepository.save(configuration));
+    }
+
     /**
      * Deletes the configuration with the given ID, if present.
      *
@@ -119,5 +166,52 @@ public class ConfigurationService {
         log.debug("get codes from configuration {}", id);
         final Configuration configuration = getConfiguration(id);
         return codeMapper.toDTO(configuration.getCodes());
+    }
+
+    public ConfigurationVM getViewModel(UUID id) {
+        log.debug("get configuration view model {}", id);
+        final Configuration configuration = getConfiguration(id);
+        final ConfigurationVM configurationVM = new ConfigurationVM(new ArrayList<>());
+        for (Code code : configuration.getCodes()) {
+            final CodeVM codeVM = new CodeVM(new ArrayList<>());
+            final Solution solution = solutionRepository
+                    .findByCodeId(code.getId())
+                    .orElseThrow(() ->
+                            new ResponseStatusException(
+                                    HttpStatus.NOT_FOUND,
+                                    String.format("Solution with code id %s not found.", code.getId())
+                            )
+                    );
+
+            List<WordVM> row = new ArrayList<>();
+            for (Word word : code.getWords()) {
+                if (word.getWord().equals("\n")) {
+                    codeVM.getWords().add(row);
+                    row = new ArrayList<>();
+                    continue;
+                }
+                Optional<Bug> bug = solution
+                        .getBugs()
+                        .stream()
+                        .filter(b -> b.getWord().getId().equals(word.getId()))
+                        .findFirst();
+                if (word.getWord().equals(" ") && bug.isEmpty()) {
+                    continue;
+                }
+                final WordVM wordVM = new WordVM();
+                if (bug.isPresent()) {
+                    wordVM.setErrorType(bug.get().getErrorType());
+                    wordVM.setCorrectValue(bug.get().getCorrectValue());
+                    wordVM.setDisplayValue(word.getWord());
+                } else {
+                    wordVM.setCorrectValue(word.getWord());
+                }
+                row.add(wordVM);
+            }
+            codeVM.getWords().add(row);
+            configurationVM.getCodes().add(codeVM);
+        }
+
+        return configurationVM;
     }
 }

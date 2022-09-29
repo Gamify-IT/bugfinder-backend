@@ -1,4 +1,4 @@
-package de.unistuttgart.bugfinder.configuration.lectureinterface.dto;
+package de.unistuttgart.bugfinder.configuration.vm;
 
 import de.unistuttgart.bugfinder.solution.bug.ErrorType;
 import lombok.AccessLevel;
@@ -12,7 +12,7 @@ import org.springframework.lang.Nullable;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class LectureInterfaceWordDTO {
+public class WordVM {
 
   String correctValue;
 
