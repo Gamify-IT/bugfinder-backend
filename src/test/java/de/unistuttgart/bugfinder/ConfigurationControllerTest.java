@@ -9,9 +9,6 @@ import de.unistuttgart.bugfinder.configuration.Configuration;
 import de.unistuttgart.bugfinder.configuration.ConfigurationDTO;
 import de.unistuttgart.bugfinder.configuration.ConfigurationMapper;
 import de.unistuttgart.bugfinder.configuration.ConfigurationRepository;
-import de.unistuttgart.bugfinder.configuration.lectureinterface.dto.LectureInterfaceCodeDTO;
-import de.unistuttgart.bugfinder.configuration.lectureinterface.dto.LectureInterfaceConfigurationDTO;
-import de.unistuttgart.bugfinder.configuration.lectureinterface.dto.LectureInterfaceWordDTO;
 import de.unistuttgart.bugfinder.configuration.vm.CodeVM;
 import de.unistuttgart.bugfinder.configuration.vm.ConfigurationVM;
 import de.unistuttgart.bugfinder.configuration.vm.WordVM;
@@ -19,11 +16,9 @@ import de.unistuttgart.bugfinder.solution.SolutionDTO;
 import de.unistuttgart.bugfinder.solution.bug.ErrorType;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
@@ -83,7 +78,7 @@ public class ConfigurationControllerTest {
   @BeforeAll
   @AfterEach
   public void deleteBasicData() {
-//    configurationRepository.deleteAll();
+        configurationRepository.deleteAll();
   }
 
   @Test
@@ -168,24 +163,24 @@ public class ConfigurationControllerTest {
 
   @Test
   void saveAndGetVM() throws Exception {
-    final LectureInterfaceConfigurationDTO viewModel = new LectureInterfaceConfigurationDTO(
+    final ConfigurationVM viewModel = new ConfigurationVM(
             List.of(
-                    new LectureInterfaceCodeDTO(
+                    new CodeVM(
                             List.of(
                                     List.of(
-                                            new LectureInterfaceWordDTO("public", "pubvik", ErrorType.LEXICAL),
-                                            new LectureInterfaceWordDTO("static", null, null),
-                                            new LectureInterfaceWordDTO("void", null, null),
-                                            new LectureInterfaceWordDTO("main", null, null),
-                                            new LectureInterfaceWordDTO("{", null, null)
+                                            new WordVM("public", "pubvik", ErrorType.LEXICAL),
+                                            new WordVM("static", null, null),
+                                            new WordVM("void", null, null),
+                                            new WordVM("main", null, null),
+                                            new WordVM("{", null, null)
                                     ),
                                     List.of(
-                                            new LectureInterfaceWordDTO("<tab>", null, null),
-                                            new LectureInterfaceWordDTO("System.out.println", null, null),
-                                            new LectureInterfaceWordDTO("(\"Hello, world\")", null, null),
-                                            new LectureInterfaceWordDTO(";", " ", ErrorType.SYNTAX)
+                                            new WordVM("<tab>", null, null),
+                                            new WordVM("System.out.println", null, null),
+                                            new WordVM("(\"Hello, world\")", null, null),
+                                            new WordVM(";", " ", ErrorType.SYNTAX)
                                     ),
-                                    List.of(new LectureInterfaceWordDTO("}", null, null))
+                                    List.of(new WordVM("}", null, null))
                             )
                     )
             )
@@ -220,7 +215,7 @@ public class ConfigurationControllerTest {
             .andExpect(status().isOk())
             .andReturn();
 
-    LectureInterfaceConfigurationDTO vmFromApi = objectMapper.readValue(vmFromApiResult.getResponse().getContentAsString(), LectureInterfaceConfigurationDTO.class);
+    ConfigurationVM vmFromApi = objectMapper.readValue(vmFromApiResult.getResponse().getContentAsString(), ConfigurationVM.class);
     assertEquals(viewModel, vmFromApi);
   }
 }
