@@ -1,7 +1,7 @@
 package de.unistuttgart.bugfinder.configuration;
 
+import de.unistuttgart.bugfinder.configuration.vm.ConfigurationVM;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,11 +27,30 @@ public class ConfigurationController {
     return configurationService.find(id);
   }
 
+  @GetMapping("/configurations/vm/{id}")
+  public ConfigurationVM getVM(@PathVariable final UUID id) {
+    log.debug("GET /configurations/{}", id);
+    return configurationService.getViewModel(id);
+  }
+
   @ResponseStatus(HttpStatus.CREATED)
   @PostMapping("/configurations")
   public ConfigurationDTO createConfiguration(@RequestBody final ConfigurationDTO configurationDTO) {
     log.debug("POST /configurations with body {}", configurationDTO);
     return configurationService.save(configurationDTO);
+  }
+
+  /**
+   * used by the lecture interface to build a configuration by the view model
+   *
+   * @param configurationBuilderCodeDTO
+   * @return
+   */
+  @ResponseStatus(HttpStatus.CREATED)
+  @PostMapping("/configurations/build")
+  public ConfigurationDTO buildConfiguration(@RequestBody final ConfigurationVM configurationBuilderCodeDTO) {
+    log.debug("POST /configurations/builder with body {}", configurationBuilderCodeDTO);
+    return configurationService.build(configurationBuilderCodeDTO);
   }
 
   @PutMapping("/configurations/{id}")

@@ -30,6 +30,8 @@ import org.springframework.test.web.servlet.MvcResult;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class ConfigurationControllerTest {
 
+  private final String API_URL = "/configurations";
+
   @Autowired
   private MockMvc mvc;
 
@@ -39,7 +41,6 @@ public class ConfigurationControllerTest {
   @Autowired
   private ConfigurationRepository configurationRepository;
 
-  private final String API_URL = "/configurations";
   private ObjectMapper objectMapper;
   private Configuration initialConfig;
   private ConfigurationDTO initialConfigDTO;

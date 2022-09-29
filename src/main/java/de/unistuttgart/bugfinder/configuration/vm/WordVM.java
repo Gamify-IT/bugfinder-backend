@@ -1,8 +1,6 @@
-package de.unistuttgart.bugfinder.configuration;
+package de.unistuttgart.bugfinder.configuration.vm;
 
-import de.unistuttgart.bugfinder.code.CodeDTO;
-import java.util.List;
-import java.util.UUID;
+import de.unistuttgart.bugfinder.solution.bug.ErrorType;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,19 +8,17 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.lang.Nullable;
 
-/**
- * Data Transfer Object for Configuration.
- *
- * @see Configuration
- */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class ConfigurationDTO {
+public class WordVM {
+
+  String correctValue;
 
   @Nullable
-  UUID id;
+  String displayValue;
 
-  List<CodeDTO> codes;
+  @Nullable
+  ErrorType errorType;
 }
