@@ -32,7 +32,7 @@ public class ConfigurationController {
   }
 
   @GetMapping("/configurations/vm/{id}")
-  public LectureInterfaceConfigurationDTO getLectureInterfaceModel(@PathVariable final UUID id) {
+  public LectureInterfaceConfigurationDTO getVM(@PathVariable final UUID id) {
     log.debug("GET /configurations/{}", id);
     return getLectureInterfaceModel.get(id);
   }
@@ -52,9 +52,7 @@ public class ConfigurationController {
    */
   @ResponseStatus(HttpStatus.CREATED)
   @PostMapping("/configurations/build")
-  public ConfigurationDTO saveLectureInterfaceModel(
-    @RequestBody final LectureInterfaceConfigurationDTO configurationBuilderCodeDTO
-  ) {
+  public ConfigurationDTO buildConfiguration(@RequestBody final LectureInterfaceConfigurationDTO configurationBuilderCodeDTO) {
     log.debug("POST /configurations/builder with body {}", configurationBuilderCodeDTO);
     return getLectureInterfaceModel.save(configurationBuilderCodeDTO);
   }
