@@ -4,8 +4,6 @@ on:
   push:
     branches:
       - "main"
-      - "feature/bugfinder-backend"
-      - "feature/lecture-interface-models"
     tags:
       - "v*"
   pull_request:

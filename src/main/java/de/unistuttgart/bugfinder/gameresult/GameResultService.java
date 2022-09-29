@@ -36,14 +36,25 @@ public class GameResultService {
   @Autowired
   private ResultClient resultClient;
 
-  public void saveGameResult(final GameResultDTO gameResultDTO, final String userId) {
+  /**
+   * Casts a GameResultDTO to GameResult and submits to overworld backend.
+   *
+   * @param gameResultDTO extern gameResultDTO
+   * @param userId id of the user
+   * @param accessToken accessToken of the user
+   * @throws IllegalArgumentException if at least one of the arguments is null
+   */
+  public void saveGameResult(final GameResultDTO gameResultDTO, final String userId, final String accessToken) {
+    if (gameResultDTO == null || userId == null || accessToken == null) {
+      throw new IllegalArgumentException("At least one argument is null");
+    }
     final OverworldResultDTO resultDTO = new OverworldResultDTO(
       gameResultDTO.getConfigurationId(),
       calculateScore(gameResultDTO),
       userId
     );
     try {
-      resultClient.submit(resultDTO);
+      resultClient.submit(accessToken, resultDTO);
     } catch (final FeignException.BadGateway badGateway) {
       final String warning =
         "The Overworld backend is currently not available. The result was NOT saved. Please try again later.";
