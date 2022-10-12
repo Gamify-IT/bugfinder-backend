@@ -1,6 +1,6 @@
 package de.unistuttgart.bugfinder.configuration;
 
-import de.unistuttgart.bugfinder.code.CodeMapper;
+import de.unistuttgart.bugfinder.configuration.code.CodeMapper;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;

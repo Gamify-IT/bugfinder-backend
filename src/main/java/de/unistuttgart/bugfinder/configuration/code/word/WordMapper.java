@@ -1,4 +1,4 @@
-package de.unistuttgart.bugfinder.code.word;
+package de.unistuttgart.bugfinder.configuration.code.word;
 
 import org.springframework.stereotype.Component;
 

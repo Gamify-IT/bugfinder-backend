@@ -1,7 +1,7 @@
 package de.unistuttgart.bugfinder.configuration;
 
-import de.unistuttgart.bugfinder.code.CodeDTO;
-import de.unistuttgart.bugfinder.code.CodeMapper;
+import de.unistuttgart.bugfinder.configuration.code.CodeDTO;
+import de.unistuttgart.bugfinder.configuration.code.CodeMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

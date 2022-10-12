@@ -1,14 +1,14 @@
 package de.unistuttgart.bugfinder.gameresult;
 
-import de.unistuttgart.bugfinder.code.Code;
+import de.unistuttgart.bugfinder.configuration.code.Code;
 import de.unistuttgart.bugfinder.configuration.Configuration;
 import de.unistuttgart.bugfinder.configuration.ConfigurationRepository;
 import de.unistuttgart.bugfinder.configuration.ConfigurationService;
-import de.unistuttgart.bugfinder.solution.Solution;
-import de.unistuttgart.bugfinder.solution.SolutionDTO;
-import de.unistuttgart.bugfinder.solution.SolutionRepository;
-import de.unistuttgart.bugfinder.solution.bug.Bug;
-import de.unistuttgart.bugfinder.solution.bug.BugDTO;
+import de.unistuttgart.bugfinder.configuration.solution.Solution;
+import de.unistuttgart.bugfinder.configuration.solution.SolutionDTO;
+import de.unistuttgart.bugfinder.configuration.solution.SolutionRepository;
+import de.unistuttgart.bugfinder.configuration.solution.bug.Bug;
+import de.unistuttgart.bugfinder.configuration.solution.bug.BugDTO;
 import feign.FeignException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

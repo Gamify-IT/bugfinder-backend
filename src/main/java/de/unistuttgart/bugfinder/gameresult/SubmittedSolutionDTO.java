@@ -1,6 +1,6 @@
 package de.unistuttgart.bugfinder.gameresult;
 
-import de.unistuttgart.bugfinder.solution.SolutionDTO;
+import de.unistuttgart.bugfinder.configuration.solution.SolutionDTO;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;

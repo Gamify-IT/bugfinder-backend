@@ -1,6 +1,7 @@
-package de.unistuttgart.bugfinder.code.word;
+package de.unistuttgart.bugfinder.configuration.code.word;
 
 import java.util.UUID;
+
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,12 +20,12 @@ import org.springframework.lang.Nullable;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class WordDTO {
 
-  @Nullable
-  UUID id;
+    @Nullable
+    UUID id;
 
-  String word;
+    String word;
 
-  public WordDTO(final String word) {
-    this.word = word;
-  }
+    public WordDTO(final String word) {
+        this.word = word;
+    }
 }

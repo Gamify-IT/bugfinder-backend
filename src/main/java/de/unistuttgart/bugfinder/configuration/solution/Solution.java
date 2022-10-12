@@ -1,7 +1,7 @@
-package de.unistuttgart.bugfinder.solution;
+package de.unistuttgart.bugfinder.configuration.solution;
 
-import de.unistuttgart.bugfinder.code.Code;
-import de.unistuttgart.bugfinder.solution.bug.Bug;
+import de.unistuttgart.bugfinder.configuration.code.Code;
+import de.unistuttgart.bugfinder.configuration.solution.bug.Bug;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;

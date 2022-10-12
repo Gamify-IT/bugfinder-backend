@@ -1,15 +1,15 @@
 package de.unistuttgart.bugfinder.lectureinterface;
 
-import de.unistuttgart.bugfinder.code.Code;
-import de.unistuttgart.bugfinder.code.word.Word;
-import de.unistuttgart.bugfinder.code.word.WordRepository;
+import de.unistuttgart.bugfinder.configuration.code.Code;
+import de.unistuttgart.bugfinder.configuration.code.word.Word;
+import de.unistuttgart.bugfinder.configuration.code.word.WordRepository;
 import de.unistuttgart.bugfinder.configuration.Configuration;
 import de.unistuttgart.bugfinder.lectureinterface.dto.LectureInterfaceCodeDTO;
 import de.unistuttgart.bugfinder.lectureinterface.dto.LectureInterfaceDTO;
 import de.unistuttgart.bugfinder.lectureinterface.dto.LectureInterfaceWordDTO;
-import de.unistuttgart.bugfinder.solution.Solution;
-import de.unistuttgart.bugfinder.solution.SolutionRepository;
-import de.unistuttgart.bugfinder.solution.bug.Bug;
+import de.unistuttgart.bugfinder.configuration.solution.Solution;
+import de.unistuttgart.bugfinder.configuration.solution.SolutionRepository;
+import de.unistuttgart.bugfinder.configuration.solution.bug.Bug;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

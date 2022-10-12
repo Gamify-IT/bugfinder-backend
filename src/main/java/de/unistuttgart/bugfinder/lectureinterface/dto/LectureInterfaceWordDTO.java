@@ -1,6 +1,6 @@
 package de.unistuttgart.bugfinder.lectureinterface.dto;
 
-import de.unistuttgart.bugfinder.solution.bug.ErrorType;
+import de.unistuttgart.bugfinder.configuration.solution.bug.ErrorType;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;

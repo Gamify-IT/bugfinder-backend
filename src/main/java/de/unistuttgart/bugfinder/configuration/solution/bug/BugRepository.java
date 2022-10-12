@@ -1,4 +1,4 @@
-package de.unistuttgart.bugfinder.code.word;
+package de.unistuttgart.bugfinder.configuration.solution.bug;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -6,8 +6,8 @@ import org.springframework.stereotype.Repository;
 import java.util.UUID;
 
 /**
- * Repository for {@code Word}.
+ * Repository for {@code Bug}.
  */
 @Repository
-public interface WordRepository extends JpaRepository<Word, UUID> {
+public interface BugRepository extends JpaRepository<Bug, UUID> {
 }

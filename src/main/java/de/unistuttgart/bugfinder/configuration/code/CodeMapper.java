@@ -1,6 +1,6 @@
-package de.unistuttgart.bugfinder.code;
+package de.unistuttgart.bugfinder.configuration.code;
 
-import de.unistuttgart.bugfinder.code.word.WordMapper;
+import de.unistuttgart.bugfinder.configuration.code.word.WordMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

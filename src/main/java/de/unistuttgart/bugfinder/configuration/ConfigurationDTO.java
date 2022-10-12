@@ -1,8 +1,10 @@
 package de.unistuttgart.bugfinder.configuration;
 
-import de.unistuttgart.bugfinder.code.CodeDTO;
+import de.unistuttgart.bugfinder.configuration.code.CodeDTO;
+
 import java.util.List;
 import java.util.UUID;
+
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,8 +23,8 @@ import org.springframework.lang.Nullable;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class ConfigurationDTO {
 
-  @Nullable
-  UUID id;
+    @Nullable
+    UUID id;
 
-  List<CodeDTO> codes;
+    List<CodeDTO> codes;
 }

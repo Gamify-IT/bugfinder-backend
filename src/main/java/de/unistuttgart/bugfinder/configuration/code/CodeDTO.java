@@ -1,9 +1,10 @@
-package de.unistuttgart.bugfinder.code;
+package de.unistuttgart.bugfinder.configuration.code;
 
-import de.unistuttgart.bugfinder.code.word.Word;
-import de.unistuttgart.bugfinder.code.word.WordDTO;
+import de.unistuttgart.bugfinder.configuration.code.word.WordDTO;
+
 import java.util.List;
 import java.util.UUID;
+
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,8 +23,8 @@ import org.springframework.lang.Nullable;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class CodeDTO {
 
-  @Nullable
-  UUID id;
+    @Nullable
+    UUID id;
 
-  List<WordDTO> words;
+    List<WordDTO> words;
 }

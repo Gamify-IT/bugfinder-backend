@@ -1,11 +1,11 @@
 package de.unistuttgart.bugfinder.lectureinterface;
 
-import de.unistuttgart.bugfinder.code.Code;
-import de.unistuttgart.bugfinder.code.CodeRepository;
+import de.unistuttgart.bugfinder.configuration.code.Code;
+import de.unistuttgart.bugfinder.configuration.code.CodeRepository;
 import de.unistuttgart.bugfinder.configuration.*;
 import de.unistuttgart.bugfinder.lectureinterface.dto.LectureInterfaceCodeDTO;
 import de.unistuttgart.bugfinder.lectureinterface.dto.LectureInterfaceDTO;
-import de.unistuttgart.bugfinder.solution.SolutionRepository;
+import de.unistuttgart.bugfinder.configuration.solution.SolutionRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

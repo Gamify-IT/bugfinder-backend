@@ -1,9 +1,9 @@
-package de.unistuttgart.bugfinder.code;
+package de.unistuttgart.bugfinder.configuration.code;
 
 import de.unistuttgart.bugfinder.configuration.ConfigurationService;
-import de.unistuttgart.bugfinder.solution.SolutionDTO;
-import de.unistuttgart.bugfinder.solution.SolutionMapper;
-import de.unistuttgart.bugfinder.solution.SolutionRepository;
+import de.unistuttgart.bugfinder.configuration.solution.SolutionDTO;
+import de.unistuttgart.bugfinder.configuration.solution.SolutionMapper;
+import de.unistuttgart.bugfinder.configuration.solution.SolutionRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -1,7 +1,7 @@
-package de.unistuttgart.bugfinder.solution.bug;
+package de.unistuttgart.bugfinder.configuration.solution.bug;
 
-import de.unistuttgart.bugfinder.code.word.WordMapper;
-import de.unistuttgart.bugfinder.code.word.WordRepository;
+import de.unistuttgart.bugfinder.configuration.code.word.WordMapper;
+import de.unistuttgart.bugfinder.configuration.code.word.WordRepository;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package de.unistuttgart.bugfinder.solution;
+package de.unistuttgart.bugfinder.configuration.solution;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

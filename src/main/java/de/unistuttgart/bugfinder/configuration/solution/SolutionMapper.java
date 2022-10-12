@@ -1,7 +1,7 @@
-package de.unistuttgart.bugfinder.solution;
+package de.unistuttgart.bugfinder.configuration.solution;
 
-import de.unistuttgart.bugfinder.code.CodeMapper;
-import de.unistuttgart.bugfinder.solution.bug.BugMapper;
+import de.unistuttgart.bugfinder.configuration.code.CodeMapper;
+import de.unistuttgart.bugfinder.configuration.solution.bug.BugMapper;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
