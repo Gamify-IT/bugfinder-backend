@@ -1,13 +1,14 @@
 package de.unistuttgart.bugfinder.solution.bug;
 
-import java.util.UUID;
-import javax.persistence.Enumerated;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.lang.Nullable;
+
+import javax.persistence.Enumerated;
+import java.util.UUID;
 
 /**
  * Data Transfer Object for Bug.
@@ -19,14 +20,13 @@ import org.springframework.lang.Nullable;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class BugDTO {
+    @Nullable
+    UUID id;
 
-  @Nullable
-  UUID id;
+    UUID wordId;
 
-  UUID wordId;
+    @Enumerated
+    ErrorType errorType;
 
-  @Enumerated
-  ErrorType errorType;
-
-  String correctValue;
+    String correctValue;
 }
