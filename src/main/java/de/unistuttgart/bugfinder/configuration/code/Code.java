@@ -1,11 +1,9 @@
 package de.unistuttgart.bugfinder.configuration.code;
 
 import de.unistuttgart.bugfinder.configuration.code.word.Word;
-
 import java.util.List;
 import java.util.UUID;
 import javax.persistence.*;
-
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,22 +20,22 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Code {
 
-    @Id
-    @GeneratedValue(generator = "uuid")
-    UUID id;
+  @Id
+  @GeneratedValue(generator = "uuid")
+  UUID id;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    List<Word> words;
+  @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+  List<Word> words;
 
-    public Code(final List<Word> words) {
-        this.words = words;
-    }
+  public Code(final List<Word> words) {
+    this.words = words;
+  }
 
-    public void addWord(final Word word) {
-        this.words.add(word);
-    }
+  public void addWord(final Word word) {
+    this.words.add(word);
+  }
 
-    public void removeWord(final Word word) {
-        this.words.remove(word);
-    }
+  public void removeWord(final Word word) {
+    this.words.remove(word);
+  }
 }

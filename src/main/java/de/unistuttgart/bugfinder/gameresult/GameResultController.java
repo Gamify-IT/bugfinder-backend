@@ -33,8 +33,8 @@ public class GameResultController {
   @PostMapping("/results")
   @ResponseStatus(HttpStatus.CREATED)
   public GameResultDTO saveGameResult(
-          @CookieValue("access_token") final String accessToken,
-          @RequestBody final GameResultDTO gameResultDTO
+    @CookieValue("access_token") final String accessToken,
+    @RequestBody final GameResultDTO gameResultDTO
   ) {
     jwtValidatorService.validateTokenOrThrow(accessToken);
     final String userId = jwtValidatorService.extractUserId(accessToken);

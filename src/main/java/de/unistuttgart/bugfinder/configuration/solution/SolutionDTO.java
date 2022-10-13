@@ -2,15 +2,14 @@ package de.unistuttgart.bugfinder.configuration.solution;
 
 import de.unistuttgart.bugfinder.configuration.code.CodeDTO;
 import de.unistuttgart.bugfinder.configuration.solution.bug.BugDTO;
+import java.util.List;
+import java.util.UUID;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.lang.Nullable;
-
-import java.util.List;
-import java.util.UUID;
 
 /**
  * Data Transfer Object for Solution.
@@ -22,10 +21,11 @@ import java.util.UUID;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class SolutionDTO {
-    @Nullable
-    UUID id;
 
-    List<BugDTO> bugs;
+  @Nullable
+  UUID id;
 
-    CodeDTO code;
+  List<BugDTO> bugs;
+
+  CodeDTO code;
 }

@@ -9,12 +9,12 @@ import org.springframework.web.bind.annotation.PostMapping;
  */
 @FeignClient(value = "resultClient", url = "${overworld.url}/internal")
 public interface ResultClient {
-    /**
-     * Submits the resultDTO to the Overworld-Backend
-     *
-     * @param accessToken the users access token
-     * @param resultDTO   the player submitted result, trimmed down to the data needed for the overworld
-     */
-    @PostMapping("/submit-game-pass")
-    void submit(@CookieValue("access_token") final String accessToken, final OverworldResultDTO resultDTO);
+  /**
+   * Submits the resultDTO to the Overworld-Backend
+   *
+   * @param accessToken the users access token
+   * @param resultDTO   the player submitted result, trimmed down to the data needed for the overworld
+   */
+  @PostMapping("/submit-game-pass")
+  void submit(@CookieValue("access_token") final String accessToken, final OverworldResultDTO resultDTO);
 }

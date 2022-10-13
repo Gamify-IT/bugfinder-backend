@@ -1,10 +1,8 @@
 package de.unistuttgart.bugfinder.configuration.solution.bug;
 
 import de.unistuttgart.bugfinder.configuration.code.word.Word;
-
 import java.util.UUID;
 import javax.persistence.*;
-
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,21 +21,21 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Bug {
 
-    @Id
-    @GeneratedValue(generator = "uuid")
-    UUID id;
+  @Id
+  @GeneratedValue(generator = "uuid")
+  UUID id;
 
-    @OneToOne
-    Word word;
+  @OneToOne
+  Word word;
 
-    @Enumerated
-    ErrorType errorType;
+  @Enumerated
+  ErrorType errorType;
 
-    String correctValue;
+  String correctValue;
 
-    public Bug(final Word word, final ErrorType errorType, final String correctValue) {
-        this.word = word;
-        this.errorType = errorType;
-        this.correctValue = correctValue;
-    }
+  public Bug(final Word word, final ErrorType errorType, final String correctValue) {
+    this.word = word;
+    this.errorType = errorType;
+    this.correctValue = correctValue;
+  }
 }

@@ -4,7 +4,6 @@ import java.util.UUID;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,13 +20,13 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Word {
 
-    @Id
-    @GeneratedValue(generator = "uuid")
-    UUID id;
+  @Id
+  @GeneratedValue(generator = "uuid")
+  UUID id;
 
-    String word;
+  String word;
 
-    public Word(final String word) {
-        this.word = word;
-    }
+  public Word(final String word) {
+    this.word = word;
+  }
 }

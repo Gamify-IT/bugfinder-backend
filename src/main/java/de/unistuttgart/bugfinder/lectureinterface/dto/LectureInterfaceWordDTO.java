@@ -19,29 +19,30 @@ import org.springframework.lang.Nullable;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class LectureInterfaceWordDTO {
-    /**
-     * the correct value of the word and the display value of the word when there is not error type.
-     */
-    String correctValue;
 
-    /**
-     * the displayed value of the word.
-     * <p>
-     * when null, the correct value is displayed.
-     * </p>
-     * <p>
-     * is only allowed to be null when there is no error type.
-     * </p>
-     */
-    @Nullable
-    String displayValue;
+  /**
+   * the correct value of the word and the display value of the word when there is not error type.
+   */
+  String correctValue;
 
-    /**
-     * the error type of the word.
-     * <p>
-     * when null, the word doesn't contain a bug.
-     * </p>
-     */
-    @Nullable
-    ErrorType errorType;
+  /**
+   * the displayed value of the word.
+   * <p>
+   * when null, the correct value is displayed.
+   * </p>
+   * <p>
+   * is only allowed to be null when there is no error type.
+   * </p>
+   */
+  @Nullable
+  String displayValue;
+
+  /**
+   * the error type of the word.
+   * <p>
+   * when null, the word doesn't contain a bug.
+   * </p>
+   */
+  @Nullable
+  ErrorType errorType;
 }

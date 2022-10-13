@@ -1,13 +1,12 @@
 package de.unistuttgart.bugfinder.gameresult;
 
 import de.unistuttgart.bugfinder.configuration.solution.SolutionDTO;
+import java.util.UUID;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
-
-import java.util.UUID;
 
 /**
  * Data Transfer Object which contains for a code the specific solution submitted by a player.
@@ -17,6 +16,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class SubmittedSolutionDTO {
-    UUID codeId;
-    SolutionDTO solution;
+
+  UUID codeId;
+  SolutionDTO solution;
 }
