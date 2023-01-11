@@ -2,15 +2,10 @@ package de.unistuttgart.bugfinder.code;
 
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
-import de.unistuttgart.bugfinder.code.word.WordDTO;
-import de.unistuttgart.bugfinder.code.word.WordMapper;
-import de.unistuttgart.bugfinder.code.word.WordService;
 import de.unistuttgart.bugfinder.configuration.ConfigurationService;
 import de.unistuttgart.bugfinder.solution.SolutionDTO;
 import de.unistuttgart.bugfinder.solution.SolutionMapper;
 import de.unistuttgart.bugfinder.solution.SolutionRepository;
-import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

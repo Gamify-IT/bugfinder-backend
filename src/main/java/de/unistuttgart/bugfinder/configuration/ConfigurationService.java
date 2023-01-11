@@ -97,7 +97,6 @@ public class ConfigurationService {
     for (CodeVM codeVM : configurationVM.getCodes()) {
       List<Word> wordsToPersistToCode = new ArrayList<>(codeVM.getWords().size());
       Set<Bug> bugsToPersistToSolution = new HashSet<>();
-      bugsToPersistToSolution = new HashSet<>();
       for (List<WordVM> row : codeVM.getWords()) {
         // check if the row only contains blank strings
         // the first row will never contain only blank strings since it comes from the lecture interface
@@ -124,16 +123,16 @@ public class ConfigurationService {
           wordsToPersistToCode.add(word);
           if (wordVM.getErrorType() != null) {
             Bug bug = new Bug(word, wordVM.getErrorType(), wordVM.getCorrectValue());
-            bugsToPersistToSolution.add(bug);
             bug = bugRepository.save(bug);
+            bugsToPersistToSolution.add(bug);
           }
         }
       }
       Code code = new Code(null, wordsToPersistToCode);
       codesToPersist.add(code);
-      Solution solution = new Solution(null, bugsToPersistToSolution, code);
       code = codeRepository.save(code);
-      solution = solutionRepository.save(solution);
+      Solution solution = new Solution(null, bugsToPersistToSolution, code);
+      solutionRepository.save(solution);
     }
     Configuration configuration = new Configuration(null, codesToPersist);
     return configurationMapper.toDTO(configurationRepository.save(configuration));

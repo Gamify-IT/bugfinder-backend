@@ -28,7 +28,7 @@ public class BugMapper {
   }
 
   public List<BugDTO> toDTO(final Collection<Bug> bugs) {
-    return bugs.parallelStream().map(this::toDTO).collect(Collectors.toList());
+    return bugs.parallelStream().map(this::toDTO).toList();
   }
 
   public Optional<BugDTO> toDTO(final Optional<Bug> bug) {
@@ -49,7 +49,7 @@ public class BugMapper {
   }
 
   public List<Bug> fromDTO(final Collection<BugDTO> bugDTOs) {
-    return bugDTOs.parallelStream().map(this::fromDTO).collect(Collectors.toList());
+    return bugDTOs.parallelStream().map(this::fromDTO).toList();
   }
 
   public Optional<Bug> fromDTO(final Optional<BugDTO> bugDTO) {

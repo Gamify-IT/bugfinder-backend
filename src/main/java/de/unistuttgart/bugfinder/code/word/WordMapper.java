@@ -13,7 +13,7 @@ public class WordMapper {
   }
 
   public List<WordDTO> toDTO(final List<Word> words) {
-    return words.parallelStream().map(this::toDTO).collect(Collectors.toList());
+    return words.parallelStream().map(this::toDTO).toList();
   }
 
   public Optional<WordDTO> toDTO(final Optional<Word> word) {
@@ -25,7 +25,7 @@ public class WordMapper {
   }
 
   public List<Word> fromDTO(final List<WordDTO> wordDTOs) {
-    return wordDTOs.parallelStream().map(this::fromDTO).collect(Collectors.toList());
+    return wordDTOs.parallelStream().map(this::fromDTO).toList();
   }
 
   public Optional<Word> fromDTO(final Optional<WordDTO> wordDTO) {
