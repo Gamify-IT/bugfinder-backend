@@ -22,7 +22,7 @@ public class CodeMapper {
   }
 
   public List<CodeDTO> toDTO(final Collection<Code> codes) {
-    return codes.parallelStream().map(this::toDTO).collect(Collectors.toList());
+    return codes.parallelStream().map(this::toDTO).toList();
   }
 
   public Optional<CodeDTO> toDTO(final Optional<Code> code) {
@@ -34,7 +34,7 @@ public class CodeMapper {
   }
 
   public List<Code> fromDTO(final Collection<CodeDTO> codeDTOs) {
-    return codeDTOs.parallelStream().map(this::fromDTO).collect(Collectors.toList());
+    return codeDTOs.parallelStream().map(this::fromDTO).toList();
   }
 
   public Optional<Code> fromDTO(final Optional<CodeDTO> codeDTO) {

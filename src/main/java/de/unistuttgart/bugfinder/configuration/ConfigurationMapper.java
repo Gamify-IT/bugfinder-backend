@@ -22,7 +22,7 @@ public class ConfigurationMapper {
   }
 
   public List<ConfigurationDTO> toDTO(final List<Configuration> codes) {
-    return codes.parallelStream().map(this::toDTO).collect(Collectors.toList());
+    return codes.parallelStream().map(this::toDTO).toList();
   }
 
   public Optional<ConfigurationDTO> toDTO(final Optional<Configuration> configuration) {
@@ -34,7 +34,7 @@ public class ConfigurationMapper {
   }
 
   public List<Configuration> fromDTO(final List<ConfigurationDTO> codeDTOs) {
-    return codeDTOs.parallelStream().map(this::fromDTO).collect(Collectors.toList());
+    return codeDTOs.parallelStream().map(this::fromDTO).toList();
   }
 
   public Optional<Configuration> fromDTO(final Optional<ConfigurationDTO> configurationDTO) {
