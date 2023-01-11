@@ -2,6 +2,17 @@ version: "3.7"
 
 services:
   #databases
+  setup:
+    container_name: setup
+    image: ghcr.io/gamify-it/test-data:main
+    pull_policy: always
+    restart: on-failure
+    environment:
+      POSTGRES_SETUP: >
+        overworld/default.sql
+        bugfinder/default.sql
+        keycloak/default.sql
+
   keycloak-db:
     container_name: keycloak-db
     image: postgres:14-alpine
@@ -67,6 +78,9 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_URL=postgresql://overworld-db:5432/postgres
+      - BUGFINDER_URL=http://bugfinder-backend/api/v1
+      - KEYCLOAK_ISSUER=http://localhost/keycloak/realms/Gamify-IT
+      - KEYCLOAK_URL=http://keycloak/keycloak/realms/Gamify-IT
 
   bugfinder-backend:
     container_name: bugfinder-backend
@@ -81,6 +95,9 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_URL=postgresql://bugfinder-db:5432/postgres
+      - KEYCLOAK_ISSUER=http://localhost/keycloak/realms/Gamify-IT
+      - KEYCLOAK_URL=http://keycloak/keycloak/realms/Gamify-IT
+      - OVERWORLD_URL=http://overworld-backend/api/v1
 
   #frontends
   landing-page:
@@ -126,14 +143,3 @@ services:
       - ./.nginx/compose/nginx-dev.conf:/etc/nginx/conf.d/default.conf:ro
     ports:
       - "80:80"
-
-  setup:
-    container_name: setup
-    image: ghcr.io/gamify-it/test-data:main
-    pull_policy: always
-    restart: on-failure
-    environment:
-      POSTGRES_SETUP: >
-        overworld/default.sql
-        bugfinder/default.sql
-        keycloak/default.sql
