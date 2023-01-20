@@ -17,6 +17,11 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
+
+import de.unistuttgart.bugfinder.solution.Solution;
+import de.unistuttgart.bugfinder.solution.SolutionRepository;
+import de.unistuttgart.bugfinder.solution.bug.Bug;
+import de.unistuttgart.bugfinder.solution.bug.ErrorType;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -41,9 +46,14 @@ public class ConfigurationControllerTest {
   @Autowired
   private ConfigurationRepository configurationRepository;
 
+  @Autowired
+  private SolutionRepository solutionRepository;
+
   private ObjectMapper objectMapper;
   private Configuration initialConfig;
   private ConfigurationDTO initialConfigDTO;
+
+  private Solution initialSolution;
 
   @BeforeEach
   public void createBasicData() {
@@ -61,17 +71,22 @@ public class ConfigurationControllerTest {
         new Word("}")
       )
     );
+    final Bug bug = new Bug(code1.getWords().get(1), ErrorType.LEXICAL, "Test");
+    final Solution solution = new Solution(null, Set.of(bug), code1);
+
     final Configuration configuration = new Configuration();
     configuration.setCodes(Set.of(code1));
     initialConfig = configurationRepository.save(configuration);
     initialConfigDTO = configurationMapper.toDTO(initialConfig);
 
+    initialSolution = solutionRepository.save(solution);
     objectMapper = new ObjectMapper();
   }
 
   @BeforeAll
   @AfterEach
   public void deleteBasicData() {
+    solutionRepository.deleteAll();
     configurationRepository.deleteAll();
   }
 
@@ -153,5 +168,27 @@ public class ConfigurationControllerTest {
 
     assertEquals(initialConfigDTO, configuration);
     assertTrue(configurationRepository.findById(initialConfig.getId()).isEmpty());
+  }
+
+  @Test
+  void cloneConfiguration() throws Exception {
+    final MvcResult result = mvc
+      .perform(put(API_URL + "/" + initialConfig.getId() + "/clone").contentType(MediaType.APPLICATION_JSON))
+      .andExpect(status().isOk())
+      .andReturn();
+
+    final UUID cloneId = objectMapper.readValue(result.getResponse().getContentAsString(), UUID.class);
+
+    Configuration cloneConfiguration = configurationRepository.findById(cloneId).get();
+
+    assertEquals(initialConfig.getCodes().size(), cloneConfiguration.getCodes().size());
+
+    initialConfig
+      .getCodes()
+      .forEach(code -> {
+        assertTrue(
+          cloneConfiguration.getCodes().stream().anyMatch(code1 -> code1.getWords().size() == code.getWords().size())
+        );
+      });
   }
 }
