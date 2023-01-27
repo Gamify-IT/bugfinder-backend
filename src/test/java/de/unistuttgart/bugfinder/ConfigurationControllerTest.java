@@ -173,7 +173,7 @@ public class ConfigurationControllerTest {
   @Test
   void cloneConfiguration() throws Exception {
     final MvcResult result = mvc
-      .perform(put(API_URL + "/" + initialConfig.getId() + "/clone").contentType(MediaType.APPLICATION_JSON))
+      .perform(post(API_URL + "/" + initialConfig.getId() + "/clone").contentType(MediaType.APPLICATION_JSON))
       .andExpect(status().isOk())
       .andReturn();
 
