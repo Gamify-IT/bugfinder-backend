@@ -68,7 +68,7 @@ public class ConfigurationController {
     return configurationService.delete(id);
   }
 
-  @PutMapping("/configurations/{id}/clone")
+  @PostMapping("/configurations/{id}/clone")
   public UUID cloneConfiguration(@PathVariable final UUID id) {
     log.debug("Clone /configurations/{}", id);
     return configurationService.cloneConfiguration(id);
