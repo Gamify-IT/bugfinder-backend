@@ -150,6 +150,12 @@ public class ConfigurationService {
     Configuration configuration = configurationRepository
       .findById(id)
       .orElseThrow(() -> new ResponseStatusException(HttpStatus.NO_CONTENT));
+    configuration
+      .getCodes()
+      .parallelStream()
+      .map(code -> solutionRepository.findByCodeId(code.getId()))
+      .filter(Optional::isPresent)
+      .forEach(solution -> solutionRepository.deleteById(solution.get().getId()));
     configurationRepository.deleteById(id);
     return configurationMapper.toDTO(configuration);
   }
@@ -164,6 +170,17 @@ public class ConfigurationService {
     log.debug("get codes from configuration {}", id);
     final Configuration configuration = getConfiguration(id);
     return codeMapper.toDTO(configuration.getCodes());
+  }
+
+  /**
+   * Clones a configuration
+   * @param id Id of the configuration
+   * @return Id of the cloned configuration
+   */
+  public UUID cloneConfiguration(final UUID id) {
+    final ConfigurationVM configuration = getViewModel(id);
+    final ConfigurationDTO cloneConfiguration = build(configuration);
+    return cloneConfiguration.getId();
   }
 
   public ConfigurationVM getViewModel(UUID id) {
