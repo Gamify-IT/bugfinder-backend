@@ -150,12 +150,12 @@ public class ConfigurationService {
     Configuration configuration = configurationRepository
       .findById(id)
       .orElseThrow(() -> new ResponseStatusException(HttpStatus.NO_CONTENT));
-    for (Code code : configuration.getCodes()) {
-      if (solutionRepository.findByCodeId(code.getId()).isPresent()) {
-        Solution solution = solutionRepository.findByCodeId(code.getId()).get();
-        solutionRepository.deleteById(solution.getId());
-      }
-    }
+    configuration
+      .getCodes()
+      .parallelStream()
+      .map(code -> solutionRepository.findByCodeId(code.getId()))
+      .filter(Optional::isPresent)
+      .forEach(solution -> solutionRepository.deleteById(solution.get().getId()));
     configurationRepository.deleteById(id);
     return configurationMapper.toDTO(configuration);
   }
