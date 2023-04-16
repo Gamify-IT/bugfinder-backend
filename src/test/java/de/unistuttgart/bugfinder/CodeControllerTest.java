@@ -37,7 +37,7 @@ import org.springframework.test.web.servlet.MvcResult;
 @AutoConfigureMockMvc
 @SpringBootTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class CodeControllerTest {
+class CodeControllerTest {
 
   @Autowired
   private MockMvc mvc;

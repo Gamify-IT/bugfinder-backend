@@ -24,9 +24,9 @@ public class Word {
   @GeneratedValue(generator = "uuid")
   UUID id;
 
-  String word;
+  String wordContent;
 
-  public Word(final String word) {
-    this.word = word;
+  public Word(final String wordContent) {
+    this.wordContent = wordContent;
   }
 }
