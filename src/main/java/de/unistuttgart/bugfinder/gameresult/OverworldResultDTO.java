@@ -17,7 +17,7 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class OverworldResultDTO {
 
-  static final String game = "BUGFINDER";
+  final String game = "BUGFINDER"; //NOSONAR
   UUID configurationId;
   long score;
   String userId;
