@@ -22,9 +22,9 @@ public class WordDTO {
   @Nullable
   UUID id;
 
-  String word;
+  String wordContent;
 
-  public WordDTO(final String word) {
-    this.word = word;
+  public WordDTO(final String wordContent) {
+    this.wordContent = wordContent;
   }
 }

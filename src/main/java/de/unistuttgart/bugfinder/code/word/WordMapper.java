@@ -21,7 +21,7 @@ public class WordMapper {
   }
 
   public Word fromDTO(final WordDTO wordDTO) {
-    return new Word(wordDTO.getId(), wordDTO.getWord());
+    return new Word(wordDTO.getId(), wordDTO.getWordContent());
   }
 
   public List<Word> fromDTO(final List<WordDTO> wordDTOs) {
