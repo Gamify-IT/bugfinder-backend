@@ -2,14 +2,14 @@ package de.unistuttgart.bugfinder.code.word;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
+
 import org.springframework.stereotype.Component;
 
 @Component
 public class WordMapper {
 
   public WordDTO toDTO(final Word word) {
-    return new WordDTO(word.getId(), word.getWord());
+    return new WordDTO(word.getId(), word.getWordContent());
   }
 
   public List<WordDTO> toDTO(final List<Word> words) {
@@ -21,7 +21,7 @@ public class WordMapper {
   }
 
   public Word fromDTO(final WordDTO wordDTO) {
-    return new Word(wordDTO.getId(), wordDTO.getWord());
+    return new Word(wordDTO.getId(), wordDTO.getWordContent());
   }
 
   public List<Word> fromDTO(final List<WordDTO> wordDTOs) {

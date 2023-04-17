@@ -37,7 +37,7 @@ import org.springframework.test.web.servlet.MvcResult;
 @AutoConfigureMockMvc
 @SpringBootTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class ConfigurationControllerTest {
+class ConfigurationControllerTest {
 
   private final String API_URL = "/configurations";
 

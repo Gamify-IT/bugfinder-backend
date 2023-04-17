@@ -92,7 +92,7 @@ public class ConfigurationService {
     return configurationMapper.toDTO(configurationRepository.save(configurationMapper.fromDTO(configurationDTO)));
   }
 
-  public ConfigurationDTO build(final ConfigurationVM configurationVM) {
+  public ConfigurationDTO build(final ConfigurationVM configurationVM) { //NOSONAR
     Set<Code> codesToPersist = new HashSet<>(configurationVM.getCodes().size());
     for (CodeVM codeVM : configurationVM.getCodes()) {
       List<Word> wordsToPersistToCode = new ArrayList<>(codeVM.getWords().size());
@@ -199,11 +199,11 @@ public class ConfigurationService {
         );
 
       List<WordVM> row = new ArrayList<>();
-      for (Word word : code.getWords()) {
-        if (word.getWord().equals(" ")) {
+      for (Word word : code.getWords()) { //NOSONAR
+        if (word.getWordContent().equals(" ")) {
           continue;
         }
-        if (word.getWord().equals("\n")) {
+        if (word.getWordContent().equals("\n")) {
           codeVM.getWords().add(row);
           row = new ArrayList<>();
           continue;
@@ -217,9 +217,9 @@ public class ConfigurationService {
         if (bug.isPresent()) {
           wordVM.setErrorType(bug.get().getErrorType());
           wordVM.setCorrectValue(bug.get().getCorrectValue());
-          wordVM.setDisplayValue(word.getWord());
+          wordVM.setDisplayValue(word.getWordContent());
         } else {
-          wordVM.setCorrectValue(word.getWord());
+          wordVM.setCorrectValue(word.getWordContent());
         }
         row.add(wordVM);
       }
