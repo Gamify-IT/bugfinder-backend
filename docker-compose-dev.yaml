@@ -84,10 +84,26 @@ services:
       - KEYCLOAK_ISSUER=http://localhost/keycloak/realms/Gamify-IT
       - KEYCLOAK_URL=http://keycloak/keycloak/realms/Gamify-IT
 
+  bugfinder-backend:
+    container_name: bugfinder-backend
+    image: ghcr.io/gamify-it/bugfinder-backend:development
+    restart: always
+    pull_policy: always
+    expose:
+      - "80"
+    depends_on:
+      - bugfinder-db
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_URL=postgresql://bugfinder-db:5432/postgres
+      - KEYCLOAK_ISSUER=http://localhost/keycloak/realms/Gamify-IT
+      - KEYCLOAK_URL=http://keycloak/keycloak/realms/Gamify-IT
+      - OVERWORLD_URL=http://overworld-backend/api/v1
   #frontends
   landing-page:
     container_name: landing-page
-    image: ghcr.io/gamify-it/landing-page:main
+    image: ghcr.io/gamify-it/landing-page:v1.6.0
     restart: always
     pull_policy: always
     expose:
@@ -95,7 +111,7 @@ services:
 
   overworld:
     container_name: overworld
-    image: ghcr.io/gamify-it/overworld:main
+    image: ghcr.io/gamify-it/overworld:v1.5.0
     restart: always
     pull_policy: always
     expose:
