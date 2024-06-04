@@ -23,6 +23,8 @@ import org.springframework.web.server.ResponseStatusException;
 public class GameResultService {
 
   static final long MAX_SCORE = 100l;
+  static final int MAX_REWARDS = 10;
+  int flagFullPoints = 3;
 
   @Autowired
   private ConfigurationRepository configurationRepository;
@@ -48,10 +50,15 @@ public class GameResultService {
     if (gameResultDTO == null || userId == null || accessToken == null) {
       throw new IllegalArgumentException("At least one argument is null");
     }
+
+    final long score = calculateScore(gameResultDTO);
+    final int rewards = calculateRewards(score);
+
     final OverworldResultDTO resultDTO = new OverworldResultDTO(
       gameResultDTO.getConfigurationId(),
-      calculateScore(gameResultDTO),
-      userId
+      score,
+      userId,
+      rewards
     );
     try {
       resultClient.submit(accessToken, resultDTO);
@@ -198,5 +205,28 @@ public class GameResultService {
       .filter(score -> score <= MAX_SCORE && score >= 0)
       .average()
       .orElse(MAX_SCORE);
+  }
+
+  /**
+   * This method calculates the rewards for one bugfinder round based on the gained scores in the
+   * current round
+   *
+   * @param score
+   * @return gained rewards
+   */
+  private int calculateRewards(final long score) {
+    if (score < 0 || score > MAX_SCORE) {
+      throw new IllegalArgumentException("Score must be between 0 and " + MAX_SCORE);
+    }
+
+    if (score == 10) {
+      flagFullPoints += 1;
+    }
+
+    if (score == 10 && flagFullPoints > 3) {
+      return 1;
+    } else {
+      return (int) Math.round((score / (double) MAX_SCORE) * MAX_REWARDS);
+    }
   }
 }

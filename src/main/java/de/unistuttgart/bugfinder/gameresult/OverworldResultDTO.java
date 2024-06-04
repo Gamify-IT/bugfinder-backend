@@ -21,4 +21,5 @@ public class OverworldResultDTO {
   UUID configurationId;
   long score;
   String userId;
+  int rewards;
 }

@@ -64,17 +64,16 @@
             <version>${com.auth0.java-jwt.version}</version>
         </dependency>
         <dependency>
-            <groupId>de.uni-stuttgart.gamify-it</groupId>
-            <artifactId>authentification-validator</artifactId>
+			<groupId>com.github.Gamify-IT</groupId>            
+			<artifactId>authentification-validator</artifactId>
             <version>${authentification-validator.version}</version>
         </dependency>
     </dependencies>
 
     <repositories>
         <repository>
-            <id>sqa-artifactory</id>
-            <name>SQA Artifactory-releases</name>
-            <url>https://rss-artifactory.ddnss.org/artifactory/libs-release</url>
+           <id>jitpack.io</id>
+			<url>https://jitpack.io</url>
         </repository>
     </repositories>
 
@@ -142,7 +141,7 @@
                     </inputGlobs>
                 </configuration>
                 <executions>
-                    <execution>
+                    <execution> 
                         <phase>validate</phase>
                         <goals>
                             <goal>${plugin.prettier.goal}</goal>
