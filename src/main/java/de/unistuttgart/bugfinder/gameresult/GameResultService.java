@@ -211,6 +211,9 @@ public class GameResultService {
    * This method calculates the rewards for one bugfinder round based on the gained scores in the
    * current round
    *
+   * For the first 3 finished rounds without any help : 10 points (after that 1 point)
+   * For each game (score<10) the score will be distributed with the given formula
+   *
    * @param score
    * @return gained rewards
    */
