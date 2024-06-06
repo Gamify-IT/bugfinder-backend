@@ -38,6 +38,9 @@ public class GameResultService {
   @Autowired
   private ResultClient resultClient;
 
+  private static int hundredScoreCount = 0;
+
+
   /**
    * Casts a GameResultDTO to GameResult and submits to overworld backend.
    *
@@ -207,29 +210,25 @@ public class GameResultService {
       .orElse(MAX_SCORE);
   }
 
+
+
   /**
    * This method calculates the rewards for one bugfinder round based on the gained scores in the
    * current round
-   *
-   * For the first 3 finished rounds without any help : 10 points (after that 1 point)
-   * For each game (score<10) the score will be distributed with the given formula
-   *
    * @param score
    * @return gained rewards
    */
-  private int calculateRewards(final long score) {
+  private long calculateRewards(final long score) {
     if (score < 0 || score > MAX_SCORE) {
       throw new IllegalArgumentException("Score must be between 0 and " + MAX_SCORE);
     }
-
-    if (score == 10) {
-      flagFullPoints += 1;
+    if (score == 100 && hundredScoreCount < 3) {
+      hundredScoreCount++;
+      return 10;
+    } else if (score == 100 && hundredScoreCount >= 3) {
+      return 5;
     }
-
-    if (score == 10 && flagFullPoints > 3) {
-      return 1;
-    } else {
-      return (int) Math.round((score / (double) MAX_SCORE) * MAX_REWARDS);
-    }
+    return score/10;
   }
+
 }
