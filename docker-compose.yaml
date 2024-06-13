@@ -84,9 +84,8 @@ services:
 
   bugfinder-backend:
     container_name: bugfinder-backend
-    image: ghcr.io/gamify-it/bugfinder-backend:main
+    build: .
     restart: always
-    pull_policy: always
     expose:
       - "80"
     depends_on:
