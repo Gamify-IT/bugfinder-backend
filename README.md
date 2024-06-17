@@ -4,72 +4,62 @@ The bugfinder backend stores the data of bugfinder instances and communicates re
 
 # Development
 
+
 ## Getting started
+> Beginning of additions (that work)
 
 Make sure you have the following installed:
 
 - Java: [JDK 1.17](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html) or higher
 - Maven: [Maven 3.6.3](https://maven.apache.org/download.cgi)
 - Docker: [Docker](https://www.docker.com/)
-
-Firstly, you have to change the `spring.datasource.username` and the `spring.datasource.password` in the `application.properties` file.
-Then, if you changed the postgres URL/ port, you also have to change `spring.datasource.url`.
+- PostgreSQL: [PostgreSQL](https://www.postgresql.org/download/)
 
 ### Run
-
-#### Docker-compose
-
-Start all dependencies with our docker-compose files.
-Check the [manual for starting the dependencies with docker-compose](https://github.com/Gamify-IT/docs/blob/main/dev-manuals/languages/docker/docker-compose.md).
-
-#### Project build
-
+### Project build
+To build the project, run:
 ```sh
 mvn install
 ```
 
-in the folder of the project.
-Go to the target folder and run
+in the project folder.
+Then go to the target folder: 
+```sh
+cd target
+```
+and run:
+```sh
+java -jar bugfinder-backend-0.0.1-SNAPSHOT.jar
+```
+to start the application.
+
+
+### Build with docker
+To run your local changes as a docker container, with all necessary dependencies, 
+build the Docker container with:
 
 ```sh
-java -jar bugfinder-service-0.0.1-SNAPSHOT.jar
+docker compose up --build
 ```
-
-### With Docker
-
-Build the Docker container with
-
+You can remove the containers with:
 ```sh
-docker build  -t bugfinder-backend-dev .
+docker compose down
 ```
 
-And run it on port `8000` with
-
-```
-docker run -d -p 8000:80 -e POSTGRES_URL="postgresql://host.docker.internal:5432/postgres" -e POSTGRES_USER="postgres" -e POSTGRES_PASSWORD="postgres" --name bugfinder-backend-dev bugfinder-backend-dev
-```
-
-To monitor, stop and remove the container you can use the following commands:
-
+### Run local with dependencies
+To run your local build within your IDE, but also have the dependencies running in docker, follow the steps
+to build the project, then run the dependencies in docker with the following:
 ```sh
-docker ps -a -f name=bugfinder-backend-dev
+docker compose -f docker-compose-dev.yaml up 
 ```
-
+You can remove the containers with:
 ```sh
-docker stop bugfinder-backend-dev
+docker compose -f docker-compose-dev.yaml down
 ```
 
-```sh
-docker rm bugfinder-backend-dev
-```
+> End of additions
 
-To run the prebuild container use
-
-```sh
-docker run -d -p 8000:80 -e POSTGRES_URL="postgresql://host.docker.internal:5432/postgres" -e POSTGRES_USER="postgres" -e POSTGRES_PASSWORD="postgres" --name bugfinder-backend ghcr.io/gamify-it/bugfinder-backend:latest
-```
-
-### testing database
+### Testing database
 
 to setup a database with docker for testing you can use
 
