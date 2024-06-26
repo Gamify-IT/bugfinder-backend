@@ -228,7 +228,7 @@ public class GameResultService {
     } else if (score == 100 && hundredScoreCount >= 3) {
       return 5;
     }
-    return score/10;
+    return (int)score/10;
   }
 
 }
