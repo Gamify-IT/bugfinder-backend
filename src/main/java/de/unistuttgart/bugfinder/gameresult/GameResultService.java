@@ -218,7 +218,7 @@ public class GameResultService {
    * @param score
    * @return gained rewards
    */
-  private long calculateRewards(final long score) {
+  private int calculateRewards(final long score) {
     if (score < 0 || score > MAX_SCORE) {
       throw new IllegalArgumentException("Score must be between 0 and " + MAX_SCORE);
     }
