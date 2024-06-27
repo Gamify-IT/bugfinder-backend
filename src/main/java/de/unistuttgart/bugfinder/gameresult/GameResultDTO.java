@@ -22,4 +22,8 @@ public class GameResultDTO {
    * Each submitted solution contains the solution of one code.
    */
   List<SubmittedSolutionDTO> submittedSolutions;
+
+  long score;
+  int rewards;
+
 }

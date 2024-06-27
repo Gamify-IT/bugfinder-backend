@@ -57,6 +57,9 @@ public class GameResultService {
     final long score = calculateScore(gameResultDTO);
     final int rewards = calculateRewards(score);
 
+    gameResultDTO.setScore(score);
+    gameResultDTO.setRewards(rewards);
+
     final OverworldResultDTO resultDTO = new OverworldResultDTO(
       gameResultDTO.getConfigurationId(),
       score,
