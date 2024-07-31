@@ -86,7 +86,6 @@ services:
     container_name: bugfinder-backend
     build: .
     restart: always
-    pull_policy: always
     expose:
       - "80"
     depends_on:
