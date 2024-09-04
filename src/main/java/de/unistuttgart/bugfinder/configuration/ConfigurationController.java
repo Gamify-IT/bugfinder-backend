@@ -21,6 +21,9 @@ public class ConfigurationController {
   @Autowired
   private ConfigurationService configurationService;
 
+  @Autowired
+  private ConfigurationMapper configurationMapper;
+
   @GetMapping("/configurations")
   public List<ConfigurationDTO> getAll() {
     log.debug("GET /configurations");
@@ -31,6 +34,18 @@ public class ConfigurationController {
   public ConfigurationDTO get(@PathVariable final UUID id) {
     log.debug("GET /configurations/{}", id);
     return configurationService.find(id);
+  }
+
+  @GetMapping("/configurations/{id}/volume")
+  public ConfigurationDTO getAll(
+          @CookieValue("access_token") final String accessToken,
+          @PathVariable final UUID id
+  ) {
+    jwtValidatorService.validateTokenOrThrow(accessToken);
+    log.debug("get configuration {}", id);
+    return configurationMapper.toDTO(
+            configurationService.getAllConfigurations(id, accessToken)
+    );
   }
 
   @GetMapping("/configurations/vm/{id}")
