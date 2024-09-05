@@ -25,4 +25,13 @@ public class ConfigurationDTO {
   UUID id;
 
   List<CodeDTO> codes;
+  /**
+   * The volume level that is setted by the player.
+   */
+  Integer volumeLevel;
+
+  public ConfigurationDTO(@Nullable UUID id, List<CodeDTO> codes) {
+    this.id = id;
+    this.codes = codes;
+  }
 }

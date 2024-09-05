@@ -18,7 +18,7 @@ public class ConfigurationMapper {
   private CodeMapper codeMapper;
 
   public ConfigurationDTO toDTO(final Configuration configuration) {
-    return new ConfigurationDTO(configuration.getId(), codeMapper.toDTO(configuration.getCodes()));
+    return new ConfigurationDTO(configuration.getId(), codeMapper.toDTO(configuration.getCodes()), configuration.getVolumeLevel());
   }
 
   public List<ConfigurationDTO> toDTO(final List<Configuration> codes) {

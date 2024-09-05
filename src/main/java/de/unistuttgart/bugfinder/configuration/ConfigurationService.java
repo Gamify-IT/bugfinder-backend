@@ -1,5 +1,6 @@
 package de.unistuttgart.bugfinder.configuration;
 
+import de.unistuttgart.bugfinder.client.OverworldClient;
 import de.unistuttgart.bugfinder.code.Code;
 import de.unistuttgart.bugfinder.code.CodeDTO;
 import de.unistuttgart.bugfinder.code.CodeMapper;
@@ -14,6 +15,8 @@ import de.unistuttgart.bugfinder.solution.SolutionRepository;
 import de.unistuttgart.bugfinder.solution.bug.Bug;
 import de.unistuttgart.bugfinder.solution.bug.BugRepository;
 import java.util.*;
+
+import de.unistuttgart.gamifyit.authentificationvalidator.JWTValidatorService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -45,6 +48,12 @@ public class ConfigurationService {
   @Autowired
   private BugRepository bugRepository;
 
+  @Autowired
+  private OverworldClient overworldClient;
+
+  @Autowired
+  private JWTValidatorService jwtValidatorService;
+
   /**
    * Get a configuration by its id.
    *
@@ -59,6 +68,44 @@ public class ConfigurationService {
         new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("Configuration with id %s not found.", id))
       );
   }
+
+  /**
+   * Search a configuration by given id and get volume level from overworld-backend
+   *
+   * @param id the id of the configuration searching for
+   * @param accessToken the users access token
+   * @return the found configuration
+   * @throws ResponseStatusException  when configuration by configurationName could not be found
+   * @throws IllegalArgumentException if at least one of the arguments is null
+   */
+  public Configuration getAllConfigurations(final UUID id, final String accessToken) {
+    if (id == null) {
+      throw new IllegalArgumentException("id is null");
+    }
+    final String userId = jwtValidatorService.extractUserId(accessToken);
+
+    KeybindingDTO keyBindingVolumeLevel = overworldClient.getKeybindingStatistic(userId, "VOLUME_LEVEL", accessToken);
+    Integer volumeLevel = Integer.parseInt(keyBindingVolumeLevel.getKey());
+
+    Configuration config = configurationRepository
+            .findById(id)
+            .orElseThrow(() ->
+                    new ResponseStatusException(
+                            HttpStatus.NOT_FOUND,
+                            String.format("There is no configuration with id %s.", id)
+                    )
+            );
+    config.setVolumeLevel(volumeLevel);
+    return configurationRepository
+            .findById(id)
+            .orElseThrow(() ->
+                    new ResponseStatusException(
+                            HttpStatus.NOT_FOUND,
+                            String.format("There is no configuration with id %s.", id)
+                    )
+            );
+  }
+
 
   /**
    * @return all configurations as list of DTOs

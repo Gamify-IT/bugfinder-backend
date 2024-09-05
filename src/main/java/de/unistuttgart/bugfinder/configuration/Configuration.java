@@ -26,6 +26,15 @@ public class Configuration {
 
   @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
   Set<Code> codes;
+  /**
+   * The volume level that is setted by the player.
+   */
+  Integer volumeLevel;
+
+  public Configuration(UUID id, Set<Code> codes) {
+    this.id = id;
+    this.codes = codes;
+  }
 
   public Configuration(final Set<Code> codes) {
     this.codes = codes;
