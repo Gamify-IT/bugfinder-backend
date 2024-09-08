@@ -23,8 +23,6 @@ import org.springframework.web.server.ResponseStatusException;
 public class GameResultService {
 
   static final long MAX_SCORE = 100l;
-  static final int MAX_REWARDS = 10;
-  int flagFullPoints = 3;
 
   @Autowired
   private ConfigurationRepository configurationRepository;
@@ -213,12 +211,14 @@ public class GameResultService {
       .orElse(MAX_SCORE);
   }
 
-
-
   /**
    * This method calculates the rewards for one bugfinder round based on the gained scores in the
    * current round
-   * @param score
+   *
+   * first three rounds: 10 rewards, after that for each 100% : 5 rewards
+   * if score != 100% then the score is divided by 10
+   *
+   * @param score score reached in this game
    * @return gained rewards
    */
   private int calculateRewards(final long score) {
@@ -228,7 +228,7 @@ public class GameResultService {
     if (score == 100 && hundredScoreCount < 3) {
       hundredScoreCount++;
       return 10;
-    } else if (score == 100 && hundredScoreCount >= 3) {
+    } else if (score == 100) {
       return 5;
     }
     return (int)score/10;
