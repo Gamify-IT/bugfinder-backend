@@ -19,7 +19,16 @@ public class OverworldResultDTO {
 
   final String game = "BUGFINDER"; //NOSONAR
   UUID configurationId;
+
+  /**
+   * The score achieved in the game.
+   */
   long score;
+
   String userId;
+
+  /**
+   * The reward-coins that the player achieved in the current round.
+   */
   int rewards;
 }

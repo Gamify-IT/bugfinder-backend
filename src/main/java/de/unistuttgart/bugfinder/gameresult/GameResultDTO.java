@@ -23,7 +23,14 @@ public class GameResultDTO {
    */
   List<SubmittedSolutionDTO> submittedSolutions;
 
+  /**
+   * The score achieved in the game.
+   */
   long score;
+
+  /**
+   * The reward-coins that the player achieved in the current round.
+   */
   int rewards;
 
 }
