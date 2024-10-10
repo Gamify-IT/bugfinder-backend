@@ -213,14 +213,19 @@ public class GameResultService {
       .orElse(MAX_SCORE);
   }
 
-
-
   /**
-   * This method calculates the rewards for one bugfinder round based on the gained scores in the
-   * current round
-   * @param score
-   * @return gained rewards
+   * Calculates the rewards for a bugfinder round based on the score achieved in the current round.
+   *
+   * Reward logic:
+   * - First three rounds with a score of 100%: 10 coins per round.
+   * - After the third round, if the score is 100%: 5 coins per round.
+   * - If the score is less than 100%, the reward is calculated as: score / 10.
+   *
+   * @param score the score achieved in the game (must be >= 0)
+   * @return the number of rewards as an integer
+   * @throws IllegalArgumentException if score is less than 0
    */
+
   private int calculateRewards(final long score) {
     if (score < 0 || score > MAX_SCORE) {
       throw new IllegalArgumentException("Score must be between 0 and " + MAX_SCORE);
