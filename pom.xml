@@ -21,6 +21,7 @@
         <com.auth0.java-jwt.version>3.19.2</com.auth0.java-jwt.version>
         <org.springframework.cloud.spring-cloud-starter-openfeign.version>3.1.4</org.springframework.cloud.spring-cloud-starter-openfeign.version>
         <plugin.prettier.goal>write</plugin.prettier.goal>
+        <liquibase.version>4.19.0</liquibase.version>
     </properties>
     <dependencies>
         <dependency>
@@ -67,6 +68,11 @@
 			<groupId>com.github.Gamify-IT</groupId>            
 			<artifactId>authentification-validator</artifactId>
             <version>${authentification-validator.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.liquibase</groupId>
+            <artifactId>liquibase-core</artifactId>
+            <version>${liquibase.version}</version>
         </dependency>
     </dependencies>
 
