@@ -93,7 +93,7 @@ public class ConfigurationService {
       try {
         volumeLevel = Integer.parseInt(keyBindingVolumeLevel.getKey());
       } catch (NumberFormatException e) {
-        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid volume level format" + keyBindingVolumeLevel.getKey());
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid volume level format.");
       }
     }
 
